@@ -1,0 +1,1 @@
+"# namedtuple_decorator" 
