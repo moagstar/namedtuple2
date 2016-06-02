@@ -7,6 +7,9 @@ import functools
 # TODO : Only rename > 2.7
 # TODO : Don't lose additional methods in class decorator
 # TODO : Signature in python3
+# TODO : travis, appveyor ci
+# TODO : setup.py pypi
+# TODO : test with tox
 
 
 __namedtuple = collections.namedtuple
