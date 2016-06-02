@@ -6,23 +6,31 @@ current standard usage:
 
 ```python
 
+# The basic function decorator uses the function argument names as field names
 @namedtuple
 def Point3d(x, y, z):
     """an element of some set called a space."""
 
 
+# However you may want to generate the field names dynamically, in this case
+# you can return field_names as expected by collections.namedtuple from the
+# function.
 @namedtuple
 def Point3d():
     """an element of some set called a space."""
     return (chr(i) for i in range(120, 123))
 
 
+# It is also possible to use as a class decorator, in which case your class
+# should define a _fields member which gives field_names as expected by
+# collections.namedtuple
 @namedtuple
 class Point3d:
     """an element of some set called a space."""
     _fields = 'x y z'
 
 
+# The function can still be used like collections.namedtuple
 Point3d = namedtuple('Point3d', 'x y z')
 ```
 
