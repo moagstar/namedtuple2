@@ -13,7 +13,8 @@ import pytest
 from namedtuple_decorator import namedtuple
 from namedtuple_decorator._namedtuple_decorator_impl import (
     _get_verbose_rename,
-    _is_used_as_plain_decorator,
+    _is_used_as_plain_class_decorator,
+    _is_used_as_plain_function_decorator,
     _isiterable,
     _is_used_like_std_namedtuple,
 )
@@ -165,47 +166,84 @@ def test_is_used_like_std_namedtuple():
     assert not _is_used_like_std_namedtuple(*args, **kwargs)
 
 
-def test_is_used_as_plain_decorator():
+def test_is_used_as_plain_class_decorator():
 
     args = []
     kwargs = {}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True]
     kwargs = {}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True, True]
     kwargs = {}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True]
     kwargs = {'verbose':True}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True]
     kwargs = {'replace':True}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
     args = ['Person', 'a b c']
     kwargs = {'replace':True}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
     class A:
         pass
 
     args = [A]
     kwargs = {}
-    assert _is_used_as_plain_decorator(*args, **kwargs)
+    assert _is_used_as_plain_class_decorator(*args)
 
     args = [A, A]
     kwargs = {}
-    assert not _is_used_as_plain_decorator(*args, **kwargs)
+    assert not _is_used_as_plain_class_decorator(*args)
 
 
-# Plain Decorator ##############################################################
+def test_is_used_as_plain_function_decorator():
 
-def test_plain_decorator():
+    args = []
+    kwargs = {}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+    args = [True]
+    kwargs = {}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+    args = [True, True]
+    kwargs = {}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+    args = [True]
+    kwargs = {'verbose':True}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+    args = [True]
+    kwargs = {'replace':True}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+    args = ['Person', 'a b c']
+    kwargs = {'replace':True}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+    def A(): pass
+
+    args = [A]
+    kwargs = {}
+    assert _is_used_as_plain_function_decorator(*args)
+
+    args = [A, A]
+    kwargs = {}
+    assert not _is_used_as_plain_function_decorator(*args)
+
+
+# Plain Class Decorator ########################################################
+
+def test_plain_class_decorator():
 
     with should_have_verbose_output(False):
 
@@ -216,10 +254,10 @@ def test_plain_decorator():
         verify(Person)
 
 
-# Plain Decorator Factory ######################################################
+# Class Decorator Factory ######################################################
 
 @pytest.mark.parametrize("verbose", [True, False])
-def test_decorator_kwargs(verbose):
+def test_class_decorator_kwargs(verbose):
 
     with should_have_verbose_output(verbose):
 
@@ -231,7 +269,7 @@ def test_decorator_kwargs(verbose):
 
 
 @pytest.mark.parametrize("verbose", [True, False])
-def test_decorator_args(verbose):
+def test_class_decorator_args(verbose):
 
     with should_have_verbose_output(verbose):
 
@@ -243,7 +281,7 @@ def test_decorator_args(verbose):
 
 
 @pytest.mark.parametrize("verbose", [True, False])
-def test_decorator_args_kwargs(verbose):
+def test_class_decorator_args_kwargs(verbose):
 
     with should_have_verbose_output(verbose):
 
@@ -255,7 +293,7 @@ def test_decorator_args_kwargs(verbose):
 
 
 @pytest.mark.parametrize("verbose", [True, False])
-def test_decorator_kwargs_2(verbose):
+def test_class_decorator_kwargs_2(verbose):
 
     with should_have_verbose_output(verbose):
 
@@ -265,9 +303,9 @@ def test_decorator_kwargs_2(verbose):
 
         verify(Person, '_1')
 
-# Decorator Should Raise #######################################################
+# Class Decorator Should Raise #################################################
 
-def test_plain_decorator_should_raise():
+def test_plain_class_decorator_should_raise():
 
     with pytest.raises(ValueError):
 
@@ -276,7 +314,7 @@ def test_plain_decorator_should_raise():
             _fields = 'name 1'
         
 
-def test_decorator_kwargs_should_raise():
+def test_class_decorator_kwargs_should_raise():
 
     with pytest.raises(ValueError):
     
@@ -285,7 +323,7 @@ def test_decorator_kwargs_should_raise():
             _fields = 'name 1'
 
 
-def test_decorator_args_should_raise():
+def test_class_decorator_args_should_raise():
 
     with pytest.raises(ValueError):
 
@@ -294,7 +332,7 @@ def test_decorator_args_should_raise():
             _fields = 'name 1'
 
 
-def test_decorator_args_kwargs_should_raise():
+def test_class_decorator_args_kwargs_should_raise():
 
     with pytest.raises(ValueError):
     
@@ -303,13 +341,123 @@ def test_decorator_args_kwargs_should_raise():
             _fields = 'name 1'
 
 
-def test_decorator_kwargs_2_should_raise():
+def test_class_decorator_kwargs_2_should_raise():
 
     with pytest.raises(ValueError):
         
         @namedtuple(verbose=True, rename=False)
         class Person:
             _fields = 'name 1'
+
+
+# Plain Function Decorator ########################################################
+
+def test_plain_function_decorator():
+
+    with should_have_verbose_output(False):
+
+        @namedtuple
+        def Person(name, age):
+            pass
+
+        verify(Person)
+
+
+# Class Function Factory ######################################################
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_plain_function_decorator_kwargs(verbose):
+
+    with should_have_verbose_output(verbose):
+
+        @namedtuple(verbose=verbose)
+        def Person(name, age):
+            pass
+
+        verify(Person)
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_function_decorator_args(verbose):
+
+    with should_have_verbose_output(verbose):
+
+        @namedtuple(verbose, True)
+        def Person():
+            return 'name 1'
+
+        verify(Person, '_1')
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_function_decorator_args_kwargs(verbose):
+
+    with should_have_verbose_output(verbose):
+
+        @namedtuple(verbose, rename=True)
+        def Person():
+            return 'name 1'
+
+        verify(Person, '_1')
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_function_decorator_kwargs_2(verbose):
+
+    with should_have_verbose_output(verbose):
+
+        @namedtuple(verbose=verbose, rename=True)
+        def Person():
+            return 'name 1'
+
+        verify(Person, '_1')
+
+
+# Class Function Should Raise #################################################
+
+def test_function_decorator_should_raise():
+
+    with pytest.raises(ValueError):
+
+        @namedtuple
+        def Person():
+            return 'name 1'
+
+
+def test_function_decorator_kwargs_should_raise():
+
+    with pytest.raises(ValueError):
+
+        @namedtuple(verbose=True)
+        def Person():
+            return 'name 1'
+
+
+def test_function_decorator_args_should_raise():
+
+    with pytest.raises(ValueError):
+
+        @namedtuple(True, False)
+        def Person():
+            return 'name 1'
+
+
+def test_function_decorator_args_kwargs_should_raise():
+
+    with pytest.raises(ValueError):
+
+        @namedtuple(True, rename=False)
+        def Person():
+            return 'name 1'
+
+
+def test_function_decorator_kwargs_2_should_raise():
+
+    with pytest.raises(ValueError):
+
+        @namedtuple(verbose=True, rename=False)
+        def Person():
+            return 'name 1'
 
 
 # Used like std ################################################################

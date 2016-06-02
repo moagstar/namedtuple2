@@ -13,6 +13,9 @@ __namedtuple = collections.namedtuple
 
 
 def _isiterable(o):
+    """
+    :return: True if o is iterable, otherwise False
+    """
     try:
         iter(o)
         return True
@@ -21,7 +24,10 @@ def _isiterable(o):
 
 
 def _get_verbose_rename(*args, **kwargs):
-
+    """
+    Get the verbose and rename arguments from positional and keyword arguments
+    passed to the decorator.
+    """
     verbose = kwargs.get('verbose', False)
     rename = kwargs.get('rename', False)
 
@@ -35,11 +41,68 @@ def _get_verbose_rename(*args, **kwargs):
 
 
 def _is_used_like_std_namedtuple(*args, **kwargs):
+    """
+    Determine if namedtuple is called as a normal function like the standard
+    way of defining namedtuple, e.g.
+
+    >>> Point = namedtuple('Point', 'x y')
+    """
     return 'field_names' in kwargs or (len(args) > 1 and _isiterable(args[1]))
 
 
-def _is_used_as_plain_decorator(*args, **kwargs):
+def _is_used_as_plain_function_decorator(*args):
+    """
+    Determine if the decorator is used as a plain class decorator, without
+    parameters e.g.
+
+    >>> @namedtuple
+    ... def Point(x, y):
+    ...     pass
+    """
+    return len(args) == 1 and callable(args[0])
+
+
+def _is_used_as_plain_class_decorator(*args):
+    """
+    Determine if the decorator is used as a plain class decorator, without
+    parameters e.g.
+
+    >>> @namedtuple
+    ... class Point:
+    ...     _fields = 'x y'
+    """
     return len(args) == 1 and inspect.isclass(args[0])
+
+
+def _class_decorator(verbose, rename, cls):
+    """
+    Decorate a class to make it into a named tuple.
+    """
+    nt = __namedtuple(cls.__name__, cls._fields, verbose, rename)
+    doc_dict = {'__doc__': cls.__doc__ or nt.__doc__}
+    return type(cls.__name__, (nt,), doc_dict)
+
+
+def _function_decorator(verbose, rename, fn):
+    """
+    Decorate a function to make it into a named tuple.
+    """
+    args = inspect.getargspec(fn).args
+    fields = fn(*args) or args
+    nt = __namedtuple(fn.__name__, fields, verbose, rename)
+    doc_dict = {'__doc__': fn.__doc__ or nt.__doc__}
+    return type(fn.__name__, (nt,), doc_dict)
+
+
+def _decorator(verbose, rename, o):
+    """
+    Decorate an object to make it into a named tuple, selecting the
+    appropriate decorator based on the type of the object o.
+    """
+    if inspect.isclass(o):
+        return _class_decorator(verbose, rename, o)
+    else:
+        return _function_decorator(verbose, rename, o)
 
 
 def namedtuple(*args, **kwargs):
@@ -90,12 +153,20 @@ def namedtuple(*args, **kwargs):
     >>> p._replace(x=100)               # _replace() is like str.replace() but targets named fields
     Point(x=100, y=22)
 
-    namedtuple can also be used as a class decorator, which since we are
-    defining a new type is a more logical syntax. The class should have a
-    _fields member which defines the fields of the namedtuple. The _fields
-    member should be a sequence of strings such as ['x', 'y']. Alternatively,
-    field_names can be a single string with each fieldname separated by
-    whitespace and/or commas, for example 'x y' or 'x, y'.
+    namedtuple can also be used as a function or class decorator, which allows
+    for a nicer syntax where the name does not have to be repeated.
+
+    >>> @namedtuple
+    ... def Point(x, y): pass
+    >>> p = Point(11, y=22)
+    >>> p.x + p.y
+    33
+
+    When used as a class decorator the class should have a _fields member which
+    defines the fields of the namedtuple. The _fields member should be a
+    sequence of strings such as ['x', 'y']. Alternatively, field_names can be
+    a single string with each fieldname separated by whitespace and/or commas,
+    for example 'x y' or 'x, y'.
 
     >>> @namedtuple
     ... class Point:
@@ -104,11 +175,18 @@ def namedtuple(*args, **kwargs):
     >>> p[0] + p[1]
     33
 
-    The decorator also supports the verbose and rename parameters:
+    Both the class and function decorators also support the verbose and rename
+    parameters:
 
     >>> @namedtuple(rename=True)
     ... class Point:
     ...     _fields = 'x 1'
+    >>> p = Point(11, _1=22)
+    >>> p._1
+    22
+    >>> @namedtuple(rename=True)
+    ... def Point:
+    ...     return 'x 1'
     >>> p = Point(11, _1=22)
     >>> p._1
     22
@@ -134,14 +212,13 @@ def namedtuple(*args, **kwargs):
     >>> hasattr(point, 'method')
     False
     """
-    def decorator(verbose, rename, cls):
-        nt = __namedtuple(cls.__name__, cls._fields, verbose, rename)
-        doc_dict = {'__doc__': cls.__doc__ or nt.__doc__}
-        return type(cls.__name__, (nt,), doc_dict)
+    # used as a plain class decorator
+    if _is_used_as_plain_class_decorator(*args):
+        return _class_decorator(False, False, args[0])
 
-    # used as a plain decorator
-    if _is_used_as_plain_decorator(*args, **kwargs):
-        return decorator(False, False, args[0])
+    # used as a plain function decorator
+    elif _is_used_as_plain_function_decorator(*args):
+        return _function_decorator(False, False, args[0])
 
     # used like the standard python namedtuple
     elif _is_used_like_std_namedtuple(*args, **kwargs):
@@ -150,4 +227,4 @@ def namedtuple(*args, **kwargs):
     # used as a parameterized decorator
     else:
         verbose, rename = _get_verbose_rename(*args, **kwargs)
-        return functools.partial(decorator, verbose, rename)
+        return functools.partial(_decorator, verbose, rename)
