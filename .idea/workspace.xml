@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29727744-c873-4952-b285-cc7137ac4d14" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" afterPath="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" />
     </list>
     <ignored path="namedtuple_decorator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +32,8 @@
       <file leaf-file-name="test_namedtuple_decorator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.65384614">
-              <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+            <state vertical-scroll-proportion="-4.1153846">
+              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
               <folding>
                 <element signature="e#6#24#0" expanded="true" />
                 <element signature="e#567#991#0" expanded="false" />
@@ -98,8 +95,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28125">
-              <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.25">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -130,8 +127,8 @@
         <option value="$PROJECT_DIR$/namedtuple_decorator/test/__init__.py" />
         <option value="$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -760,10 +757,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6153846">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1464895615679" expanded="true" signature="3572:3600" placeholder="..." />
+            <marker date="1464895615679" expanded="true" signature="3778:3806" placeholder="..." />
+            <marker date="1464895615679" expanded="true" signature="3973:4057" placeholder="..." />
+            <marker date="1464895615679" expanded="true" signature="4254:4333" placeholder="..." />
+            <marker date="1464895615679" expanded="true" signature="4284:4305" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.65384614">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        <state vertical-scroll-proportion="-4.1153846">
+          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding>
             <element signature="e#6#24#0" expanded="true" />
             <element signature="e#567#991#0" expanded="false" />
@@ -804,25 +816,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6153846">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <marker date="1464895615679" expanded="true" signature="3572:3600" placeholder="..." />
-            <marker date="1464895615679" expanded="true" signature="3778:3806" placeholder="..." />
-            <marker date="1464895615679" expanded="true" signature="3973:4057" placeholder="..." />
-            <marker date="1464895615679" expanded="true" signature="4254:4333" placeholder="..." />
-            <marker date="1464895615679" expanded="true" signature="4284:4305" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28125">
-          <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.25">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
           <folding />
         </state>
       </provider>
