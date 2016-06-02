@@ -11,7 +11,7 @@ class Point:
     _fields = 'x y'
 
 @namedtuple
-def Point:
+def Point():
     '''an element of some set called a space'''
     return 'x y'
 
@@ -26,7 +26,7 @@ decorator, for example:
 
 ```python
 @namedtuple(replace=True)
-def Point:
+def Point():
     return xrange(10)
 ```
 
