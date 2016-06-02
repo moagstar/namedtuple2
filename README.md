@@ -5,6 +5,7 @@ can be used as a class and function decorator, while still supporting the
 current standard usage:
 
 ```python
+from namedtuple_decorator import namedtuple
 
 # The basic function decorator uses the function argument names as field names
 @namedtuple
