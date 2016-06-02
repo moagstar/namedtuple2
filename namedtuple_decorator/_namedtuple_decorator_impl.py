@@ -5,8 +5,8 @@ import functools
 
 # TODO : Better docstrings (by monkey patching _class_template)
 # TODO : Only rename > 2.7
-# TODO : Defining additional methods
-# TODO : Support function decorator
+# TODO : Don't lose additional methods in class decorator
+# TODO : Signature in python3
 
 
 __namedtuple = collections.namedtuple

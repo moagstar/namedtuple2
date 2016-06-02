@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="29727744-c873-4952-b285-cc7137ac4d14" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/namedtuple_decorator.iml" afterPath="$PROJECT_DIR$/.idea/namedtuple_decorator.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.coveragerc" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" afterPath="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py" afterPath="$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py" />
     </list>
     <ignored path="namedtuple_decorator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="567" column="0" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
+              <caret line="377" column="0" selection-start-line="377" selection-start-column="0" selection-end-line="377" selection-end-column="0" />
               <folding>
                 <element signature="e#615#1039#0" expanded="false" />
                 <element signature="e#1098#1466#0" expanded="false" />
@@ -105,9 +103,61 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65625">
-              <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.78125">
+              <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.5254238">
+              <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".coveragerc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.coveragerc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_namedtuple_decorator_impl.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+                <marker date="1464901172262" expanded="true" signature="1351:1368" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="1617:1645" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="5078:5083" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="5522:5550" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="5756:5784" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="5885:5910" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="6077:6090" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="6077:6161" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="6358:6437" placeholder="..." />
+                <marker date="1464901172262" expanded="true" signature="6388:6409" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -136,9 +186,10 @@
         <option value="$PROJECT_DIR$/namedtuple_decorator/__init__.py" />
         <option value="$PROJECT_DIR$/namedtuple_decorator/test/__init__.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" />
         <option value="$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py" />
         <option value="$PROJECT_DIR$/idea.py" />
+        <option value="$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py" />
+        <option value="$PROJECT_DIR$/.coveragerc" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -192,6 +243,20 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="namedtuple_decorator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="namedtuple_decorator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="namedtuple_decorator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="namedtuple_decorator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="namedtuple_decorator" />
@@ -563,7 +628,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1055" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32655245" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -764,14 +829,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/namedtuple_decorator/test/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -786,14 +843,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78125">
-          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python3.5/collections/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -802,22 +851,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5254238">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.coveragerc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/namedtuple_decorator/_namedtuple_decorator_impl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25083056">
-          <caret line="92" column="45" selection-start-line="92" selection-start-column="45" selection-end-line="92" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <marker date="1464899662082" expanded="true" signature="1336:1353" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="1602:1630" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="5063:5068" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="5507:5535" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="5741:5769" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="5870:5895" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="6062:6075" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="6062:6146" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="6343:6422" placeholder="..." />
-            <marker date="1464899662082" expanded="true" signature="6373:6394" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="1351:1368" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="1617:1645" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="5078:5083" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="5522:5550" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="5756:5784" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="5885:5910" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="6077:6090" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="6077:6161" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="6358:6437" placeholder="..." />
+            <marker date="1464901172262" expanded="true" signature="6388:6409" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -825,7 +898,7 @@
     <entry file="file://$PROJECT_DIR$/namedtuple_decorator/test/test_namedtuple_decorator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="567" column="0" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
+          <caret line="377" column="0" selection-start-line="377" selection-start-column="0" selection-end-line="377" selection-end-column="0" />
           <folding>
             <element signature="e#615#1039#0" expanded="false" />
             <element signature="e#1098#1466#0" expanded="false" />
@@ -889,8 +962,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65625">
-          <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.78125">
+          <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
           <folding />
         </state>
       </provider>

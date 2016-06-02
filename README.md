@@ -1,11 +1,10 @@
 # namedtuple_decorator
 
-A drop in replacement for the standard function collections.namedtuple that
-supports use as a class and function decorator, while still supporting the
-standard usage:
+A drop in replacement for the standard function `collections.namedtuple` that
+can be used as a class and function decorator, while still supporting the
+current standard usage:
 
 ```python
-
 
 @namedtuple
 def Point3d(x, y, z):
@@ -27,7 +26,7 @@ class Point3d:
 Point3d = namedtuple('Point3d', 'x y z')
 ```
 
-The new syntax avoids having to repeat the name twice. It is also possible to
+Using as a decorator avoids having to repeat the name. It is also possible to
 set the docstring of the namedtuple using the decorator syntax.
 
 The replace and verbose parameters are supported as parameters to both the
