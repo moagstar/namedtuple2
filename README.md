@@ -95,6 +95,7 @@ are passed:
 ...
 * change dynamic field name syntax so that field names are parameters to the namedtuple function
 * change class decorator to use __init__ signature as field names
+* take a look at some alternative memoize implementations and use the best (see http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/ and https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize)
 
 For example I prefer this syntax for dynamic field names and class decorator:
 
