@@ -75,7 +75,7 @@ def test_isiterable():
     assert _isiterable([]) == True
     assert _isiterable('') == True
     assert _isiterable((1, 2,)) == True
-    assert _isiterable((x for x in range(1))) == True
+    assert _isiterable((x for x in range(1))) == True   # pragma: no cover - generator expression never iterated
     assert _isiterable(test_isiterable) == False
     assert _isiterable(True) == False
     assert _isiterable(False) == False
@@ -128,16 +128,20 @@ def test_get_verbose_rename():
     verbose, rename = _get_verbose_rename(*(), **{'rename': False})
     assert not verbose, not rename
 
-    verbose, rename = _get_verbose_rename(*(), **{'rename': False, 'verbose': True})
+    verbose, rename = _get_verbose_rename(*(),
+                                          **{'rename': False, 'verbose': True})
     assert verbose, not rename
 
-    verbose, rename = _get_verbose_rename(*(), **{'rename': True, 'verbose': True})
+    verbose, rename = _get_verbose_rename(*(),
+                                          **{'rename': True, 'verbose': True})
     assert verbose, rename
 
-    verbose, rename = _get_verbose_rename(*(), **{'rename': True, 'verbose': False})
+    verbose, rename = _get_verbose_rename(*(),
+                                          **{'rename': True, 'verbose': False})
     assert not verbose, rename
 
-    verbose, rename = _get_verbose_rename(*(), **{'rename': False, 'verbose': False})
+    verbose, rename = _get_verbose_rename(*(),
+                                          **{'rename': False, 'verbose': False})
     assert not verbose, not rename
 
 
@@ -171,75 +175,59 @@ def test_is_used_like_std_namedtuple():
 def test_is_used_as_plain_class_decorator():
 
     args = []
-    kwargs = {}
     assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True]
-    kwargs = {}
     assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True, True]
-    kwargs = {}
     assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True]
-    kwargs = {'verbose':True}
     assert not _is_used_as_plain_class_decorator(*args)
 
     args = [True]
-    kwargs = {'replace':True}
     assert not _is_used_as_plain_class_decorator(*args)
 
     args = ['Person', 'a b c']
-    kwargs = {'replace':True}
     assert not _is_used_as_plain_class_decorator(*args)
 
     class A:
-        pass
+        def __init__(self): pass
 
     args = [A]
-    kwargs = {}
     assert _is_used_as_plain_class_decorator(*args)
 
     args = [A, A]
-    kwargs = {}
     assert not _is_used_as_plain_class_decorator(*args)
 
 
 def test_is_used_as_plain_function_decorator():
 
     args = []
-    kwargs = {}
     assert not _is_used_as_plain_function_decorator(*args)
 
     args = [True]
-    kwargs = {}
     assert not _is_used_as_plain_function_decorator(*args)
 
     args = [True, True]
-    kwargs = {}
     assert not _is_used_as_plain_function_decorator(*args)
 
     args = [True]
-    kwargs = {'verbose':True}
     assert not _is_used_as_plain_function_decorator(*args)
 
     args = [True]
-    kwargs = {'replace':True}
     assert not _is_used_as_plain_function_decorator(*args)
 
     args = ['Person', 'a b c']
-    kwargs = {'replace':True}
     assert not _is_used_as_plain_function_decorator(*args)
 
-    def A(): pass
+    def a(): pass  # pragma: no cover - function never called
 
-    args = [A]
-    kwargs = {}
+    args = [a]
     assert _is_used_as_plain_function_decorator(*args)
 
-    args = [A, A]
-    kwargs = {}
+    args = [a, a]
     assert not _is_used_as_plain_function_decorator(*args)
 
 
@@ -522,7 +510,8 @@ def test_used_like_std(verbose):
         verify(Person, '_1')
 
     with should_have_verbose_output(verbose):
-        Person = namedtuple(typename='Person', field_names='name age', verbose=verbose)
+        Person = namedtuple(typename='Person',
+                            field_names='name age', verbose=verbose)
         verify(Person)
 
     with should_have_verbose_output(verbose):
