@@ -7,6 +7,8 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
+# mock
+import mock
 # pytest
 import pytest
 # namedtuple_decorator
@@ -565,3 +567,75 @@ def test_decorator_with_docstring():
         """
 
     verify(Person, doc_expected=doc_expected)
+
+
+# More complicated example #####################################################
+
+def test_complex():
+
+    import csv
+
+    class NamedTupleReader:
+        """
+        Read named tuples from a csv file.
+        """
+
+        def __init__(self, *args, **kwargs):
+            self._reader = csv.reader(*args, **kwargs)
+            @namedtuple
+            def Row(): return next(self._reader)
+            self._row_factory = Row
+
+        def __iter__(self):
+            return self
+
+        def next(self):
+            return self._row_factory(*next(self._reader))
+
+    # For example we have some csv data source, we know that there will be a
+    # column url, but additional columns we do not know about. We want to sort
+    # records by url. This could be done with DictReader, but then we create
+    # a dict for each row returned, and access the url value by looking up in
+    # the dict, which is more expensive and a bit more ugly e.g. row.url vs
+    # row['url']
+
+    reader = NamedTupleReader(StringIO(
+        'url,publication_date,author\n'
+        'http://www.pdf995.com/samples/pdf.pdf,2016-05-15,pdf995\n'
+        'http://www.publishers.org.uk/_resources/assets/attachment/full/0/2091.pdf,2016-06-03,Example Author\n'
+        'http://www.pdf995.com/samples/pdf.pdf,2016-01-15,pdf995\n'
+    ))
+
+    result = StringIO()
+    writer = csv.writer(result, lineterminator='\n')
+    writer.writerows(sorted(reader, key=lambda r: r.url))
+
+    expected = (
+        'http://www.pdf995.com/samples/pdf.pdf,2016-05-15,pdf995\n'
+        'http://www.pdf995.com/samples/pdf.pdf,2016-01-15,pdf995\n'
+        'http://www.publishers.org.uk/_resources/assets/attachment/full/0/2091.pdf,2016-06-03,Example Author\n'
+    )
+    assert result.getvalue() == expected
+
+
+# Test Memoize #################################################################
+
+def test_memoize():
+
+    call_count = [0]
+
+    def nametuple_replace(*args, **kwargs):
+        call_count[0] += 1
+        return collections.namedtuple(*args, **kwargs)
+
+    @mock.patch('namedtuple_decorator._namedtuple_decorator_impl._original_namedtuple',
+                nametuple_replace)
+    def do_test():
+        """verify that multiple classes are not created"""
+        @namedtuple
+        def Point(x, y): pass
+        @namedtuple
+        def Point(x, y): pass
+
+    do_test()
+    assert call_count[0] == 1

@@ -3,16 +3,36 @@ import inspect
 import functools
 
 
-# TODO : Better docstrings (by monkey patching _class_template)
-# TODO : Only rename > 2.7
-# TODO : Don't lose additional methods in class decorator
-# TODO : Signature in python3
-# TODO : travis, appveyor ci
-# TODO : setup.py pypi
-# TODO : test with tox
+def memoize(obj):
+    """
+    Cache the result of a function call based on it's arguments.
+    """
+    cache = obj.cache = {}
+    @functools.wraps(obj)
+    def memoizer(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = obj(*args, **kwargs)
+        return cache[key]
+    return memoizer
 
 
-__namedtuple = collections.namedtuple
+_original_namedtuple = collections.namedtuple
+
+
+@memoize
+def _memoized_namedtuple(name, field_names, verbose, *args):
+    return _original_namedtuple(name, field_names, verbose, *args)
+
+
+def _namedtuple(name, field_names, verbose, *args):
+    # when verbose was requested we should still display the generated code
+    # at the moment the best way I can do this is by regenerating the type
+    # even though it has been cached...
+    if verbose:
+        return _original_namedtuple(name, field_names, verbose, *args)
+    else:
+        return _memoized_namedtuple(name, field_names, verbose, *args)
 
 
 def _isiterable(o):
@@ -81,7 +101,7 @@ def _class_decorator(verbose, rename, cls):
     """
     Decorate a class to make it into a named tuple.
     """
-    nt = __namedtuple(cls.__name__, cls._fields, verbose, rename)
+    nt = _namedtuple(cls.__name__, cls._fields, verbose, rename)
     doc_dict = {'__doc__': cls.__doc__ or nt.__doc__}
     return type(cls.__name__, (nt,), doc_dict)
 
@@ -92,7 +112,7 @@ def _function_decorator(verbose, rename, fn):
     """
     args = inspect.getargspec(fn).args
     fields = fn(*args) or args
-    nt = __namedtuple(fn.__name__, fields, verbose, rename)
+    nt = _namedtuple(fn.__name__, fields, verbose, rename)
     doc_dict = {'__doc__': fn.__doc__ or nt.__doc__}
     return type(fn.__name__, (nt,), doc_dict)
 
@@ -225,7 +245,7 @@ def namedtuple(*args, **kwargs):
 
     # used like the standard python namedtuple
     elif _is_used_like_std_namedtuple(*args, **kwargs):
-        return __namedtuple(*args, **kwargs)
+        return _original_namedtuple(*args, **kwargs)
 
     # used as a parameterized decorator
     else:
