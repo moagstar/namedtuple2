@@ -81,20 +81,20 @@ are passed:
 
 ## TODO
 
-# TODO : Better docstrings (by monkey patching _class_template)
-# TODO : Only rename > 2.7
-# TODO : Signature in python3 instead of getargspec
-# TODO : Sphinx, readthedocs
-# TODO : travis, appveyor, circle
-# TODO : setup.py pypi
-# TODO : test with tox
-# TODO : Add test for memoize function
-# TODO : Find some way of only displaying the output when verbose==True
-# TODO : Don't lose additional methods in class decorator? Maybe create a class that is a child of the namedtuple
-# TODO : Add some documentation info about the philosophy behind define the signature
+* Better docstrings (by monkey patching _class_template)
+* Only rename > 2.7
+* Signature in python3 instead of getargspec
+* Sphinx, readthedocs
+* travis, appveyor, circle
+* setup.py pypi
+* test with tox
+* Add test for memoize function
+* Find some way of only displaying the output when verbose==True
+* Don't lose additional methods in class decorator? Maybe create a class that is a child of the namedtuple
+* Add some documentation info about the philosophy behind define the signature
 ...
-# TODO : change dynamic field name syntax so that field names are parameters to the namedtuple function
-# TODO : change class decorator to use __init__ signature as field names
+* change dynamic field name syntax so that field names are parameters to the namedtuple function
+* change class decorator to use __init__ signature as field names
 
 For example I prefer this syntax for dynamic field names and class decorator:
 
