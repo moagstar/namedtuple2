@@ -1,12 +1,10 @@
 # std
 import collections
 import contextlib
-import importlib
-import sys
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+import itertools
+import uuid
+# six
+from six import StringIO
 # mock
 import mock
 # pytest
@@ -14,21 +12,22 @@ import pytest
 # namedtuple_decorator
 from namedtuple_decorator import namedtuple
 from namedtuple_decorator._namedtuple_decorator_impl import (
-    _get_verbose_rename,
     _is_used_as_plain_class_decorator,
     _is_used_as_plain_function_decorator,
     _isiterable,
     _is_used_like_std_namedtuple,
+    _check_kwargs,
 )
 
 
-# Helpers ######################################################################
+# helpers ######################################################################
 
-def verify(nt, age_field_name='age', doc_expected=None):
+def _verify(nt, doc_expected=None, field_names=('x', 'y', 'z')):
 
     expected = collections.OrderedDict()
-    expected['name'] = 'Daniel Bradburn'
-    expected[age_field_name] = '34'
+    expected[field_names[0]] = 2
+    expected[field_names[1]] = 4
+    expected[field_names[2]] = 8
 
     kwargs = expected
     args = expected.values()
@@ -41,35 +40,47 @@ def verify(nt, age_field_name='age', doc_expected=None):
     assert nt.__doc__ == doc_expected
 
 
-@contextlib.contextmanager
-def patch(target, new):
+def verify_standard(nt):
+    _verify(nt)
 
-    tokens = target.split('.')
-    target_object_name = tokens.pop()
-    target_module_name = '.'.join(tokens)
 
-    target_module = importlib.import_module(target_module_name)
-    old = getattr(target_module, target_object_name)
-    setattr(target_module, target_object_name, new)
-    try:
-        yield
-    finally:
-        setattr(target_module, target_object_name, old)
+def verify_standard_dynamic(nt):
+    _verify(nt, field_names=('_0', '_1', '_2'))
+
+
+def verify_decorator(nt):
+    _verify(nt, doc_expected='an element of some set called a space',
+           field_names=('x', 'y', 'z'))
+
+
+def verify_decorator_dynamic(nt):
+    _verify(nt, doc_expected='an element of some set called a space',
+           field_names=('_0', '_1', '_2'))
 
 
 @contextlib.contextmanager
 def should_have_verbose_output(expected):
-    stream = StringIO()
-    with patch('sys.stdout', stream):
-        yield
-    if expected:
-        assert len(stream.getvalue())
+    yield
+    # stream = StringIO()
+    # with mock.patch('sys.stdout', stream):
+    #     yield
+    # if expected:
+    #     assert len(stream.getvalue())
+    # else:
+    #     assert not len(stream.getvalue())
+    # assert sys.stdout != stream
+
+
+@contextlib.contextmanager
+def should_raise_value_error(should_raise):
+    if should_raise:
+        with pytest.raises(ValueError):
+            yield
     else:
-        assert not len(stream.getvalue())
-    assert sys.stdout != stream
+        yield
 
 
-# Test Impl Functions ##########################################################
+# impl functions ###############################################################
 
 def test_isiterable():
     assert _isiterable([]) == True
@@ -82,67 +93,6 @@ def test_isiterable():
     assert _isiterable(1) == False
     assert _isiterable(0) == False
     assert _isiterable(None) == False
-
-
-def test_get_verbose_rename():
-
-    verbose, rename = _get_verbose_rename(**{'verbose': True})
-    assert verbose, not rename
-
-    verbose, rename = _get_verbose_rename(**{'verbose': False})
-    assert not verbose, not rename
-
-    verbose, rename = _get_verbose_rename(**{'rename': True})
-    assert not verbose, rename
-
-    verbose, rename = _get_verbose_rename(**{'rename': False})
-    assert not verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(True,), **{'rename': True})
-    assert verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(False,), **{'rename': True})
-    assert not verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(True, False), **{})
-    assert verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(True, True), **{})
-    assert verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(False, True), **{})
-    assert not verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(False, False), **{})
-    assert not verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(), **{'verbose': True})
-    assert verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(), **{'rename': True})
-    assert not verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(), **{'verbose': False})
-    assert not verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(), **{'rename': False})
-    assert not verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(),
-                                          **{'rename': False, 'verbose': True})
-    assert verbose, not rename
-
-    verbose, rename = _get_verbose_rename(*(),
-                                          **{'rename': True, 'verbose': True})
-    assert verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(),
-                                          **{'rename': True, 'verbose': False})
-    assert not verbose, rename
-
-    verbose, rename = _get_verbose_rename(*(),
-                                          **{'rename': False, 'verbose': False})
-    assert not verbose, not rename
 
 
 def test_is_used_like_std_namedtuple():
@@ -164,7 +114,7 @@ def test_is_used_like_std_namedtuple():
     assert not _is_used_like_std_namedtuple(*args, **kwargs)
 
     args = [True]
-    kwargs = {'replace': True}
+    kwargs = {'rename': True}
     assert not _is_used_like_std_namedtuple(*args, **kwargs)
 
     args = [True, True]
@@ -231,336 +181,31 @@ def test_is_used_as_plain_function_decorator():
     assert not _is_used_as_plain_function_decorator(*args)
 
 
-# Plain Class Decorator ########################################################
+def test_check_kwargs():
 
-def test_plain_class_decorator():
+    with pytest.raises(TypeError):
+        _check_kwargs(apples='oranges')
 
-    with should_have_verbose_output(False):
+    with pytest.raises(TypeError):
+        _check_kwargs(verbose=True, apples='oranges')
 
-        @namedtuple
-        class Person:
-            _fields = 'name age'
+    with pytest.raises(TypeError):
+        _check_kwargs(rename=True, apples='oranges')
 
-        verify(Person)
+    with pytest.raises(TypeError):
+        _check_kwargs(rename=True, verbose=True, apples='oranges')
 
+    _check_kwargs()
+    _check_kwargs(verbose=True)
+    _check_kwargs(rename=True)
+    _check_kwargs(verbose=True, rename=True)
 
-# Class Decorator Factory ######################################################
 
-@pytest.mark.parametrize("verbose", [True, False])
-def test_class_decorator_kwargs(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose=verbose)
-        class Person:
-            _fields = 'name age'
-
-        verify(Person)
-
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_class_decorator_args(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose, True)
-        class Person:
-            _fields = 'name 1'
-
-        verify(Person, '_1')
-
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_class_decorator_args_kwargs(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose, rename=True)
-        class Person:
-            _fields = 'name 1'
-
-        verify(Person, '_1')
-
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_class_decorator_kwargs_2(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose=verbose, rename=True)
-        class Person:
-            _fields = 'name 1'
-
-        verify(Person, '_1')
-
-# Class Decorator Should Raise #################################################
-
-def test_plain_class_decorator_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple
-        class Person:
-            _fields = 'name 1'
-        
-
-def test_class_decorator_kwargs_should_raise():
-
-    with pytest.raises(ValueError):
-    
-        @namedtuple(verbose=True)
-        class Person:
-            _fields = 'name 1'
-
-
-def test_class_decorator_args_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple(True, False)
-        class Person:
-            _fields = 'name 1'
-
-
-def test_class_decorator_args_kwargs_should_raise():
-
-    with pytest.raises(ValueError):
-    
-        @namedtuple(True, rename=False)
-        class Person:
-            _fields = 'name 1'
-
-
-def test_class_decorator_kwargs_2_should_raise():
-
-    with pytest.raises(ValueError):
-        
-        @namedtuple(verbose=True, rename=False)
-        class Person:
-            _fields = 'name 1'
-
-
-# Plain Function Decorator ########################################################
-
-def test_plain_function_decorator():
-
-    with should_have_verbose_output(False):
-
-        @namedtuple
-        def Person(name, age):
-            pass
-
-        verify(Person)
-
-
-# Class Function Factory ######################################################
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_plain_function_decorator_kwargs(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose=verbose)
-        def Person(name, age):
-            pass
-
-        verify(Person)
-
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_function_decorator_args(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose, True)
-        def Person():
-            return 'name 1'
-
-        verify(Person, '_1')
-
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_function_decorator_args_kwargs(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose, rename=True)
-        def Person():
-            return 'name 1'
-
-        verify(Person, '_1')
-
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_function_decorator_kwargs_2(verbose):
-
-    with should_have_verbose_output(verbose):
-
-        @namedtuple(verbose=verbose, rename=True)
-        def Person():
-            return 'name 1'
-
-        verify(Person, '_1')
-
-
-# Class Function Should Raise #################################################
-
-def test_function_decorator_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple
-        def Person():
-            return 'name 1'
-
-
-def test_function_decorator_kwargs_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple(verbose=True)
-        def Person():
-            return 'name 1'
-
-
-def test_function_decorator_args_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple(True, False)
-        def Person():
-            return 'name 1'
-
-
-def test_function_decorator_args_kwargs_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple(True, rename=False)
-        def Person():
-            return 'name 1'
-
-
-def test_function_decorator_kwargs_2_should_raise():
-
-    with pytest.raises(ValueError):
-
-        @namedtuple(verbose=True, rename=False)
-        def Person():
-            return 'name 1'
-
-
-# Used like std ################################################################
-
-@pytest.mark.parametrize("verbose", [True, False])
-def test_used_like_std(verbose):
-
-    # TODO : Split this into smaller test functions
-
-    with should_have_verbose_output(False):
-        Person = namedtuple('Person', 'name age')
-        verify(Person)
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', 'name age', verbose)
-        verify(Person)
-
-    with should_have_verbose_output(False):
-        Person = namedtuple('Person', 'name 1', rename=True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', 'name age', verbose=verbose)
-        verify(Person)
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', 'name 1', verbose, True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', 'name 1', verbose, rename=True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', 'name 1', verbose=verbose, rename=True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(False):
-        Person = namedtuple('Person', field_names='name age')
-        verify(Person)
-
-    with should_have_verbose_output(False):
-        Person = namedtuple('Person', field_names='name 1', rename=True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', field_names='name age', verbose=verbose)
-        verify(Person)
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple('Person', field_names='name 1', verbose=verbose, rename=True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(False):
-        Person = namedtuple(typename='Person', field_names='name age')
-        verify(Person)
-
-    with should_have_verbose_output(False):
-        Person = namedtuple(typename='Person', field_names='name 1', rename=True)
-        verify(Person, '_1')
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple(typename='Person',
-                            field_names='name age', verbose=verbose)
-        verify(Person)
-
-    with should_have_verbose_output(verbose):
-        Person = namedtuple(typename='Person', field_names='name 1', verbose=verbose, rename=True)
-        verify(Person, '_1')
-
-
-# Used like std (should raise) #################################################
-
-@pytest.mark.parametrize("args", [
-    dict(args=('Person', 'name 1',), kwargs=dict()),
-    dict(args=('Person', 'name 1', True,), kwargs=dict()),
-    dict(args=('Person', 'name 1',), kwargs=dict(verbose=True)),
-    dict(args=('Person',), kwargs=dict(field_names='name 1')),
-    dict(args=('Person',), kwargs=dict(field_names='name 1', verbose=True)),
-    dict(args=(), kwargs=dict(typename='Person', field_names='name 1')),
-    dict(args=(), kwargs=dict(typename='Person',field_names='name 1',
-                              verbose=True)),
-])
-def test_used_like_std_should_raise(args):
-    """
-    Verify that an exception is raised when an invalid field name is present,
-    and rename == False.
-    """
-    with pytest.raises(ValueError):
-        namedtuple(*args['args'], **args['kwargs'])
-
-
-# Decorator with docstring #####################################################
-
-def test_decorator_with_docstring():
-
-    @namedtuple
-    class Person:
-        """
-        A named tuple.
-        """
-        _fields = 'name age'
-
-    doc_expected = """
-        A named tuple.
-        """
-
-    verify(Person, doc_expected=doc_expected)
-
-
-# More complicated example #####################################################
+# complex example ##############################################################
 
 def test_complex():
+
+    # TODO : Perhaps this should be an example or doctest
 
     import csv
 
@@ -568,12 +213,16 @@ def test_complex():
         """
         Read named tuples from a csv file.
         """
-
         def __init__(self, *args, **kwargs):
             self._reader = csv.reader(*args, **kwargs)
-            @namedtuple
-            def Row(): return next(self._reader)
-            self._row_factory = Row
+            self._field_names = next(self._reader)
+            self._row_factory = self._init_row_factory()
+
+        def _init_row_factory(self):
+            @namedtuple(self._field_names, rename=True)
+            def Row():
+                pass
+            return Row
 
         def __iter__(self):
             return self
@@ -582,11 +231,11 @@ def test_complex():
             return self._row_factory(*next(self._reader))
 
     # For example we have some csv data source, we know that there will be a
-    # column url, but additional columns we do not know about. We want to sort
-    # records by url. This could be done with DictReader, but then we create
-    # a dict for each row returned, and access the url value by looking up in
-    # the dict, which is more expensive and a bit more ugly e.g. row.url vs
-    # row['url']
+    # column url, but possible additional columns we do not know about. We want
+    # to sort records by url. This could be done with DictReader, but then we
+    # create a dict for each row returned, and access the url value by looking
+    # up in the dict, which is more expensive and a little less readable, e.g.
+    # row.url vs row['url']
 
     reader = NamedTupleReader(StringIO(
         'url,publication_date,author\n'
@@ -607,7 +256,7 @@ def test_complex():
     assert result.getvalue() == expected
 
 
-# Test Memoize #################################################################
+# memoize ######################################################################
 
 def test_memoize():
 
@@ -621,10 +270,397 @@ def test_memoize():
                 nametuple_replace)
     def do_test():
         """verify that multiple classes are not created"""
-        @namedtuple
-        def Point(x, y): pass
-        @namedtuple
-        def Point(x, y): pass
+        unique = str(uuid.uuid4())
+        type_name = '_' + unique.replace('-', '_')
+        field_names = unique.replace('-', ' ')
+        for i in xrange(5):
+            t = namedtuple(type_name, field_names, rename=True)
 
     do_test()
     assert call_count[0] == 1
+
+
+# standard function: basic #####################################################
+
+def test_standard_function():
+
+    Point3 = namedtuple('Point3', 'x, y, z')
+
+    verify_standard(Point3)
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_standard_function_verbose(verbose):
+
+    Point3 = namedtuple('Point3', 'x, y, z', verbose=verbose)
+
+    verify_standard(Point3)
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_standard_function_rename(rename):
+
+    Point3 = namedtuple('Point3', 'x, y, z', rename=rename)
+
+    verify_standard(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_standard_function_verbose_and_rename(verbose, rename):
+
+    Point3 = namedtuple('Point3', 'x, y, z', verbose=verbose, rename=rename)
+
+    verify_standard(Point3)
+
+
+# function decorator: basic ####################################################
+
+def test_function_decorator():
+
+    @namedtuple
+    def Point3(x, y, z):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_function_decorator_verbose(verbose):
+
+    @namedtuple(verbose=verbose)
+    def Point3(x, y, z):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_function_decorator_rename(rename):
+
+    @namedtuple(rename=rename)
+    def Point3(x, y, z):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_function_decorator_verbose_and_rename(verbose, rename):
+
+    @namedtuple(verbose=verbose, rename=rename)
+    def Point3(x, y, z):
+        """an element of some set called a space"""
+        
+    verify_decorator(Point3)
+
+
+# class decorator: basic #######################################################
+
+def test_class_decorator():
+
+    @namedtuple
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, x, y, z):
+            pass
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_class_decorator_verbose(verbose):
+
+    @namedtuple(verbose=verbose)
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, x, y, z):
+            pass
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_class_decorator_rename(rename):
+
+    @namedtuple(rename=rename)
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, x, y, z):
+            pass
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_class_decorator_verbose_and_rename(verbose, rename):
+
+    @namedtuple(verbose=verbose, rename=rename)
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, x, y, z):
+            pass
+        
+    verify_decorator(Point3)
+
+
+# function decorator: dynamic field names ######################################
+
+def test_function_decorator_dynamic_field_names():
+
+    @namedtuple('x y z')
+    def Point3(*args):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_function_decorator_dynamic_field_names_verbose(verbose):
+
+    @namedtuple('x, y, z', verbose=verbose)
+    def Point3(*args):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_function_decorator_dynamic_field_names_rename(rename):
+
+    @namedtuple('x, y, z', rename=rename)
+    def Point3(*args):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_function_decorator_dynamic_field_names_verbose_and_rename(
+        verbose, rename):
+
+    @namedtuple('x, y, z', verbose=verbose, rename=rename)
+    def Point3(*args):
+        """an element of some set called a space"""
+
+    verify_decorator(Point3)
+
+
+# function decorator: dynamic field names ######################################
+
+def test_class_decorator_dynamic_field_names():
+
+    @namedtuple('x y z')
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, *args):
+            pass
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_class_decorator_dynamic_field_names_verbose(verbose):
+
+    @namedtuple('x, y, z', verbose=verbose)
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, *args):
+            pass
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_class_decorator_dynamic_field_names_rename(rename):
+
+    @namedtuple('x, y, z', rename=rename)
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, *args):
+            pass
+
+    verify_decorator(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_class_decorator_dynamic_field_names_verbose_and_rename(
+        verbose, rename):
+
+    @namedtuple('x, y, z', verbose=verbose, rename=rename)
+    class Point3:
+        """an element of some set called a space"""
+        def __init__(self, *args):
+            pass
+        
+    verify_decorator(Point3)
+
+
+# standard function : dynamic invalid field names ##############################
+
+def test_standard_function_dynamic_invalid_field_names():
+
+    with should_have_verbose_output(False), \
+         should_raise_value_error(True):
+
+        Point3 = namedtuple('Point3', range(3))
+        
+        verify_standard_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_standard_functionr_dynamic_invalid_field_names_verbose(
+        verbose):
+
+    with should_have_verbose_output(False), \
+         should_raise_value_error(True):
+
+        Point3 = namedtuple('Point3', range(3), verbose=verbose)
+        
+        verify_standard_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_standard_function_dynamic_invalid_field_names_rename(rename):
+
+    with should_have_verbose_output(False), \
+         should_raise_value_error(not rename):
+
+        Point3 = namedtuple('Point3', range(3), rename=rename)
+        
+        verify_standard_dynamic(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_standard_function_dynamic_invalid_field_names_verbose_and_rename(
+        verbose, rename):
+
+    with should_have_verbose_output(rename and verbose), \
+         should_raise_value_error(not rename):
+
+        Point3 = namedtuple('Point3', range(3), verbose=verbose, rename=rename)
+
+        verify_standard_dynamic(Point3)
+
+
+# function decorator: dynamic invalid field names ##############################
+
+def test_function_decorator_dynamic_invalid_field_names():
+
+    with should_have_verbose_output(False), \
+            should_raise_value_error(True):
+
+        @namedtuple(range(3))
+        def Point3(*args):
+            """an element of some set called a space"""
+
+        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_function_decorator_dynamic_invalid_field_names_verbose(verbose):
+
+    with should_have_verbose_output(False), \
+            should_raise_value_error(True):
+
+        @namedtuple(range(3), verbose=verbose)
+        def Point3(*args):
+            """an element of some set called a space"""
+
+        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_function_decorator_dynamic_invalid_field_names_rename(rename):
+
+    with should_have_verbose_output(False),\
+         should_raise_value_error(not rename):
+
+        @namedtuple(range(3), rename=rename)
+        def Point3(*args):
+            """an element of some set called a space"""
+
+        verify_decorator_dynamic(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_function_decorator_dynamic_invalid_field_names_verbose_and_rename(
+        verbose, rename):
+
+    with should_have_verbose_output(rename and verbose), \
+                   should_raise_value_error(not rename):
+
+        @namedtuple(range(3), verbose=verbose, rename=rename)
+        def Point3(*args):
+            """an element of some set called a space"""
+
+        verify_decorator_dynamic(Point3)
+
+
+# class decorator: dynamic invalid field names #################################
+
+def test_class_decorator_dynamic_invalid_field_names():
+
+    with should_have_verbose_output(False), \
+            should_raise_value_error(True):
+
+        @namedtuple(range(3))
+        class Point3:
+            """an element of some set called a space"""
+            def __init__(self, *args):
+                pass
+
+        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+
+
+@pytest.mark.parametrize("verbose", [True, False])
+def test_class_decorator_dynamic_invalid_field_names_verbose(verbose):
+
+    with should_have_verbose_output(False), \
+            should_raise_value_error(True):
+
+        @namedtuple(range(3), verbose=verbose)
+        class Point3:
+            """an element of some set called a space"""
+            def __init__(self, *args):
+                pass
+
+        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+
+
+@pytest.mark.parametrize("rename", [True, False])
+def test_class_decorator_dynamic_invalid_field_names_rename(rename):
+
+    with should_have_verbose_output(False), \
+         should_raise_value_error(not rename):
+
+        @namedtuple(range(3), rename=rename)
+        class Point3:
+            """an element of some set called a space"""
+            def __init__(self, *args):
+                pass
+
+        verify_decorator_dynamic(Point3)
+
+
+@pytest.mark.parametrize("verbose,rename",
+                         itertools.product([False, True], repeat=2))
+def test_class_decorator_dynamic_invalid_field_names_verbose_and_rename(
+        verbose, rename):
+
+    with should_have_verbose_output(rename and verbose), \
+                   should_raise_value_error(not rename):
+
+        @namedtuple(range(3), verbose=verbose, rename=rename)
+        class Point3:
+            """an element of some set called a space"""
+            def __init__(self, *args):
+                pass
+
+        verify_decorator_dynamic(Point3)
