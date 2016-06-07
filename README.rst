@@ -1,4 +1,6 @@
-# namedtuple2
+***********
+namedtuple2
+***********
 
 A drop in replacement for the standard function `collections.namedtuple` with
 the following benefits:
@@ -8,67 +10,65 @@ the following benefits:
 * Can be used as a class and function decorator (or class / function decorator factory)
 * When used as a decorator the type name does not have to be specified twice.
 
-## Usage
+=====
+Usage
+=====
 
-### Like the standard `collections.namedtuple`
+------------------------------------------
+Like the standard `collections.namedtuple`
+------------------------------------------
 
->>> from namedtuple_decorator import namedtuple
->>> Point3 = namedtuple('Point3', 'x y z')
+    >>> from namedtuple_decorator import namedtuple
+    >>> Point3 = namedtuple('Point3', 'x y z')
 
-### As a function decorator
+-----------------------
+As a function decorator
+-----------------------
 
->>> from namedtuple_decorator import namedtuple
->>> @namedtuple
-... def Point3(x, y, z):
-...     """an element of some set called a space"""
-
-If the field names are dynamically generated, they can be passed to the
-decorator factory:
-
->>> from namedtuple_decorator import namedtuple
->>> @namedtuple(chr(x) for x in range(120, 123))
-... def Fields(*args):
-...     pass
-
-### As a class decorator
-
->>> from namedtuple_decorator import namedtuple
->>> @namedtuple(chr(x) for x in range(120, 123))
-... class Point3:
-...     """an element of some set called a space"""
-...     def __init__(self, x, y, z):
-...         pass
+    >>> from namedtuple_decorator import namedtuple
+    >>> @namedtuple
+    ... def Point3(x, y, z):
+    ...     """an element of some set called a space"""
 
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
 
->>> from namedtuple_decorator import namedtuple
->>> @namedtuple(range(3))
-... class Fields:
-...     def __init__(self, *args):
-...         pass
+    >>> from namedtuple_decorator import namedtuple
+    >>> @namedtuple(chr(x) for x in range(120, 123))
+    ... def Fields(*args):
+    ...     pass
 
-## Installation
+--------------------
+As a class decorator
+--------------------
 
-Installing from PyPI using pip:
+    >>> from namedtuple_decorator import namedtuple
+    >>> @namedtuple(chr(x) for x in range(120, 123))
+    ... class Point3:
+    ...     """an element of some set called a space"""
+    ...     def __init__(self, x, y, z):
+    ...         pass
 
-```bash
-$ pip install table2dicts
-```
+If the field names are dynamically generated, they can be passed to the
+decorator factory:
 
-Installing from source:
+    >>> from namedtuple_decorator import namedtuple
+    >>> @namedtuple(range(3))
+    ... class Fields:
+    ...     def __init__(self, *args):
+    ...         pass
 
-```bash
-$ python setup.py install
-```
-
-## Motivation
+==========
+Motivation
+==========
 
 The main motivation for this is to provide an improved syntax for defining a
 named tuple, as well as offering the ability to set the docstring on the newly
 created type.
 
-## How it works
+============
+How it works
+============
 
 The function namedtuple selects an implementation based on the parameters that
 are passed:
@@ -84,7 +84,9 @@ are passed:
 * otherwise we assume a decorator factory is desired with the verbose and
   replace flags passed as arguments.
 
-## TODO
+====
+TODO
+====
 
 * Better docstrings (by monkey patching _class_template)
 * Only rename > 2.7
