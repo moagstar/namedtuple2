@@ -5,15 +5,15 @@ namedtuple2
 A drop in replacement for the standard function `collections.namedtuple` with
 the following benefits:
 
-* `Memoization`_ on the generated type.
-* Additional `Docstring`_ argument.
-* Can be used:
+* `Memoization`_ on the generated type
+* Additional `Docstring`_ argument
+* Can be used
     - `Like the standard collections.namedtuple`_
     - `As a function decorator`_
     - `As a function decorator factory`_
     - `As a class decorator`_
     - `As a class decorator factory`_
-* When used as a decorator the type name does not have to be specified twice.
+* When used as a decorator the type name does not have to be specified twice
 
 =====
 Usage
