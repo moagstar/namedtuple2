@@ -5,18 +5,23 @@ namedtuple2
 A drop in replacement for the standard function `collections.namedtuple` with
 the following benefits:
 
-* The generated type is memoized.
-* Added a docstring argument.
-* Can be used as a class and function decorator (or class / function decorator factory)
+* `Memoization`_ on the generated type.
+* Additional `Docstring`_ argument.
+* Can be used:
+    - `Like the standard collections.namedtuple`_
+    - `As a function decorator`_
+    - `As a function decorator factory`_
+    - `As a class decorator`_
+    - `As a class decorator factory`_
 * When used as a decorator the type name does not have to be specified twice.
 
 =====
 Usage
 =====
 
-------------------------------------------
-Like the standard `collections.namedtuple`
-------------------------------------------
+----------------------------------------
+Like the standard collections.namedtuple
+----------------------------------------
 
     >>> from namedtuple_decorator import namedtuple
     >>> Point3 = namedtuple('Point3', 'x y z')
@@ -29,6 +34,10 @@ As a function decorator
     >>> @namedtuple
     ... def Point3(x, y, z):
     ...     """an element of some set called a space"""
+
+-------------------------------
+As a function decorator factory
+-------------------------------
 
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
@@ -49,14 +58,33 @@ As a class decorator
     ...     def __init__(self, x, y, z):
     ...         pass
 
+----------------------------
+As a class decorator factory
+----------------------------
+
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
 
     >>> from namedtuple_decorator import namedtuple
-    >>> @namedtuple(range(3))
+    >>> @namedtuple(chr(x) for x in range(120, 123))
     ... class Fields:
     ...     def __init__(self, *args):
     ...         pass
+
+=========
+Docstring
+=========
+
+TODO
+
+===========
+Memoization
+===========
+
+The generated classes are memoized which is particularly useful when generating
+named tuples with dymamic field names to ensure that lots of classes are not
+instantiated. See the examples/csv_named_tuple_reader.py for an demonstration
+of how this might be useful.
 
 ==========
 Motivation
