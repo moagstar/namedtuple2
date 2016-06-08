@@ -11,7 +11,7 @@ written twice:
     from namedtuple2 import namedtuple
 
     @namedtuple
-    def Point3(x, y, z): pass
+    def Point3(x, y, z) : 'an element of some set called a space'
 
 vs:
 
