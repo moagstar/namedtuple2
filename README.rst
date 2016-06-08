@@ -2,15 +2,17 @@
 namedtuple2
 ***********
 
+A drop in replacement for the standard function `collections.namedtuple`
+
 .. code:: python
 
     from namedtuple_decorator import namedtuple
+
     @namedtuple
     def Point3(x, y, z):
         """an element of some set called a space"""
 
-A drop in replacement for the standard function `collections.namedtuple` with
-the following benefits:
+namedtuple2 comes with the following benefits:
 
 - `Memoization`_ on the generated type.
 
