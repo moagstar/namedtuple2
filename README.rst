@@ -54,7 +54,10 @@ Like the standard collections.namedtuple
 As a function decorator
 -----------------------
 
-    >>> from namedtuple2 import namedtuple
+When used as a function decorator you can think of it as defining the signature
+of a top-level function which is the constructor for the type. The decorator
+then replaces this with the actual generated namedtuple.
+
     >>> @namedtuple
     ... def Point3(x, y, z):
     ...     """an element of some set called a space"""
@@ -66,16 +69,22 @@ As a function decorator factory
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
 
-    >>> from namedtuple2 import namedtuple
-    >>> @namedtuple(chr(x) for x in range(120, 123))
-    ... def Fields(*args):
-    ...     """an element of some set called a space"""
+    >>> @namedtuple(chr(x) for x in range(ord('a'), ord('d')))
+    ... def Fields(*args): pass
+
+The decorator factory can also be used to pass the verbose or rename parameters:
+
+    >>> @namedtuple(range(3), rename=True)
+    ... def Fields(*args): pass
 
 --------------------
 As a class decorator
 --------------------
 
-    >>> from namedtuple2 import namedtuple
+When used as a class decorator you can think of it as defining the name of the
+type and the signature of the constructor. The decorator then replaces this
+with the actual generated namedtuple.
+
     >>> @namedtuple
     ... class Point3:
     ...     """an element of some set called a space"""
@@ -93,6 +102,11 @@ decorator factory:
     >>> @namedtuple(chr(x) for x in range(120, 123))
     ... class Fields:
     ...     """an element of some set called a space"""
+
+The decorator factory can also be used to pass the verbose or rename parameters:
+
+    >>> @namedtuple(range(3), rename=True)
+    ... class Fields: pass
 
 =========
 Docstring
