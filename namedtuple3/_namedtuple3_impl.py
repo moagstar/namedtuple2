@@ -163,11 +163,15 @@ def namedtuple(*args, **kwargs):
 
     # used as a plain class decorator
     if _is_used_as_plain_class_decorator(*args):
-        return _class_decorator(args[0], None, False, False, None)
+
+        return _class_decorator(args[0], field_names=None, verbose=False,
+                                rename=False, docstring=None)
 
     # used as a plain function decorator
     elif _is_used_as_plain_function_decorator(*args):
-        return _function_decorator(args[0], None, False, False, None)
+
+        return _function_decorator(args[0], field_names=None, verbose=False,
+                                   rename=False, docstring=None)
 
     # used like the standard python namedtuple
     elif _is_used_like_std_namedtuple(*args, **kwargs):
@@ -179,6 +183,7 @@ def namedtuple(*args, **kwargs):
         rename = kwargs.get('rename', False)
         docstring = kwargs.get('docstring', None)
         field_names = args[0] if args else None
+
         return functools.partial(_decorator, field_names=field_names,
                                  verbose=verbose, rename=rename,
                                  docstring=docstring)
