@@ -25,10 +25,6 @@ vs:
 Features
 ========
 
-- `Memoization`_ on the generated type.
-
-- `Docstring`_ can be set on the generated type.
-
 - Can be used:
 
     - `Like the standard collections.namedtuple`_
@@ -37,7 +33,9 @@ Features
     - `As a class decorator`_
     - `As a class decorator factory`_
 
-- When used as a decorator the type name does not have to be specified twice.
+- `Memoization`_ on the generated type.
+
+- `Docstring`_ can be set on the generated type.
 
 =====
 Usage
