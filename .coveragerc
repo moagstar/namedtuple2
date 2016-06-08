@@ -1,5 +1,4 @@
 [run]
-source = eztables
 branch = True
 
 [report]
