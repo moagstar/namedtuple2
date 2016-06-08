@@ -12,13 +12,9 @@ the following benefits:
 - Can be used:
 
     - `Like the standard collections.namedtuple`_
-
     - `As a function decorator`_
-
     - `As a function decorator factory`_
-
     - `As a class decorator`_
-
     - `As a class decorator factory`_
 
 - When used as a decorator the type name does not have to be specified twice.
@@ -26,6 +22,8 @@ the following benefits:
 =====
 Usage
 =====
+
+There are several usage patterns:
 
 ----------------------------------------
 Like the standard collections.namedtuple
@@ -53,14 +51,14 @@ decorator factory:
     >>> from namedtuple_decorator import namedtuple
     >>> @namedtuple(chr(x) for x in range(120, 123))
     ... def Fields(*args):
-    ...     pass
+    ...     """an element of some set called a space"""
 
 --------------------
 As a class decorator
 --------------------
 
     >>> from namedtuple_decorator import namedtuple
-    >>> @namedtuple(chr(x) for x in range(120, 123))
+    >>> @namedtuple
     ... class Point3:
     ...     """an element of some set called a space"""
     ...     def __init__(self, x, y, z):
@@ -76,8 +74,7 @@ decorator factory:
     >>> from namedtuple_decorator import namedtuple
     >>> @namedtuple(chr(x) for x in range(120, 123))
     ... class Fields:
-    ...     def __init__(self, *args):
-    ...         pass
+    ...     """an element of some set called a space"""
 
 =========
 Docstring
@@ -110,13 +107,17 @@ The functio-n namedtuple selects an implementation based on the parameters that
 are passed:
 
 - when given a class we assume that a plain class decorator is intended
+
 - when given a callable we assume that a plain function decorator is intended
+
     - the function should return either the field_names as expected in
       collections.namedtuple
     - or None in which case the function argument names are used as the
       field_names
+
 - when fields_names is present in keyword arguments, or the second positional
   argument is iterable we assume the classic form of namedtuple is intended
+
 - otherwise we assume a decorator factory is desired with the verbose and
   replace flags passed as arguments.
 
@@ -125,14 +126,12 @@ TODO
 ====
 
 - Better docstrings (by monkey patching _class_template)
-- Only rename > 2.7
+- Only rename parameter > 2.7
 - Signature in python3 instead of getargspec
 - Sphinx, readthedocs
+- test with tox
 - travis, appveyor, circle
 - setup.py pypi
-- test with tox
-- Add test for memoize function
-- Find some way of only displaying the output when verbose==True
 - Don't lose additional methods in class decorator? Maybe create a class that is a child of the namedtuple
 - Add some documentation info about the philosophy behind define the signature
 - take a look at some alternative memoize implementations and use the best (see http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/ and https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize)
