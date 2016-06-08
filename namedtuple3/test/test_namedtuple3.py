@@ -2,7 +2,12 @@
 import collections
 import contextlib
 import itertools
+import datetime
+import socket
 import uuid
+import sys
+# dill
+import dill
 # six
 from six import StringIO
 # mock
@@ -10,6 +15,7 @@ import mock
 # pytest
 import pytest
 # namedtuple_decorator
+from namedtuple3._namedtuple_impl import namedtuple as original_namedtuple
 from namedtuple3 import namedtuple
 from namedtuple3._namedtuple3_impl import (
     _is_used_as_plain_class_decorator,
@@ -17,6 +23,8 @@ from namedtuple3._namedtuple3_impl import (
     _isiterable,
     _is_used_like_std_namedtuple,
     _check_kwargs,
+    _b32encode_no_digits,
+    _b32decode_no_digits,
 )
 
 
@@ -60,15 +68,14 @@ def verify_fields_with_docstring(nt):
 
 @contextlib.contextmanager
 def should_have_verbose_output(expected):
-    yield
-    # stream = StringIO()
-    # with mock.patch('sys.stdout', stream):
-    #     yield
-    # if expected:
-    #     assert len(stream.getvalue())
-    # else:
-    #     assert not len(stream.getvalue())
-    # assert sys.stdout != stream
+    stream = StringIO()
+    with mock.patch('sys.stdout', stream):
+        yield
+    if expected:
+        assert len(stream.getvalue())
+    else:
+        assert not len(stream.getvalue())
+    assert sys.stdout != stream
 
 
 @contextlib.contextmanager
@@ -201,6 +208,27 @@ def test_check_kwargs():
     _check_kwargs(verbose=True, rename=True)
 
 
+words = list(''.join(x) for x in itertools.product('ab', repeat=3))
+
+
+@pytest.mark.parametrize("value",
+    words +
+    list(itertools.product(words, repeat=1)) +
+    list(itertools.product(words, repeat=2)) +
+    [
+        1,
+        socket.gethostname(),
+        datetime.datetime.now,
+        ('127.0.0.1', 8080),
+    ]
+)
+def test_b32encode_decode_no_digits(value):
+    encoded = _b32encode_no_digits(value)
+    original_namedtuple(encoded, 'x y')
+    decoded = _b32decode_no_digits(encoded)
+    assert value == decoded
+
+
 # memoize ######################################################################
 
 def test_memoize():
@@ -209,7 +237,7 @@ def test_memoize():
 
     def nametuple_replace(*args, **kwargs):
         call_count[0] += 1
-        return collections.namedtuple(*args, **kwargs)
+        return original_namedtuple(*args, **kwargs)
 
     @mock.patch('namedtuple3._namedtuple3_impl._original_namedtuple',
                 nametuple_replace)
@@ -625,7 +653,7 @@ def test_standard_docstring():
 def test_default():
 
     @namedtuple
-    def Person(surname, name='Unknown'): 'a person is a being'
+    def Person(surname, name='Unknown') : 'a person is a being'
 
     import sys
     import socket
@@ -639,5 +667,5 @@ def test_default():
         server=socket.gethostname(),
         application=sys.executable,
         process=lambda: threading.current_thread().name,
-        timestamp=lambda: datetime.datetime.now(),
+        timestamp=datetime.datetime.now,
     ) : 'message for the logging system'

@@ -1,6 +1,31 @@
-import collections
+# std
+import imp
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import inspect
 import functools
+import pickle
+import base64
+# namedtuple3
+from _namedtuple_impl import namedtuple as _original_namedtuple
+
+
+def _b32encode_no_digits(s, dumps=pickle.dumps):
+    encoded = base64.b32encode(dumps(s))
+    return ''.join(
+        chr(ord('a') + int(x)) if x.isdigit() else ('_' if x == '=' else x)
+        for x in encoded
+    )
+
+
+def _b32decode_no_digits(s, loads=pickle.loads):
+    string_to_decode = ''.join(
+        '=' if x == '_' else (str(ord(x) - ord('a')) if x.islower() else x)
+        for x in s
+    )
+    return loads(base64.b32decode(string_to_decode))
 
 
 def memoize(obj):
@@ -17,29 +42,13 @@ def memoize(obj):
     return memoizer
 
 
-_original_namedtuple = collections.namedtuple
-
-
-def _original_namedtuple_with_docstring(name, field_names, verbose=False,
-                                        rename=False, docstring=None):
-    """
-    Replacement namedtuple which can be used to set the docstring.
-    """
-
-    nt = _original_namedtuple(name, field_names, verbose, rename)
-    doc_dict = {'__doc__': docstring or nt.__doc__}
-
-    return type(name, (nt,), doc_dict)
-
-
 @memoize
 def _memoized_namedtuple(name, field_names, verbose, rename, docstring):
     """
     Named tuple function which remembers the resulting type based on the
     parameters passed.
     """
-    return _original_namedtuple_with_docstring(name, field_names, verbose,
-                                               rename, docstring)
+    return _original_namedtuple(name, field_names, verbose, rename, docstring)
 
 
 def _namedtuple(name, field_names, verbose=False, rename=False, docstring=None):
@@ -47,11 +56,9 @@ def _namedtuple(name, field_names, verbose=False, rename=False, docstring=None):
     # at the moment the best way I can do this is by regenerating the type
     # even though it has been cached...
     if verbose:
-        return _original_namedtuple_with_docstring(name, field_names, verbose,
-                                                   rename, docstring)
+        return _original_namedtuple(name, field_names, verbose, rename, docstring)
     else:
-        return _memoized_namedtuple(name, field_names, verbose, rename,
-                                    docstring)
+        return _memoized_namedtuple(name, field_names, verbose, rename, docstring)
 
 
 def _isiterable(o):
