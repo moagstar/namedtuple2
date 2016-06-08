@@ -618,3 +618,27 @@ def test_standard_docstring():
     Point3 = namedtuple('Point3', 'x y z',
                         docstring="""an element of some set called a space""")
     verify_point3_with_docstring(Point3)
+
+
+# default ######################################################################
+
+def test_default():
+
+    @namedtuple
+    def Person(surname, name='Unknown'): 'a person is a being'
+
+    import sys
+    import socket
+    import datetime
+    import threading
+
+    @namedtuple
+    def LogMessage(
+        message_type='info',
+        server=socket.gethostname(),
+        application=sys.executable,
+        process=lambda: threading.current_thread().name,
+        timestamp=lambda: datetime.datetime.now(),
+        message='',
+    ):
+        'message for the logging system'

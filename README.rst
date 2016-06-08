@@ -177,13 +177,49 @@ TODO
 ====
 
 - Better docstrings (by monkey patching _class_template)
-- Only rename parameter > 2.7
+
 - Signature in python3 instead of getargspec
+
 - Sphinx, readthedocs
+
 - test with tox
+
 - travis, appveyor, circle
+
 - setup.py pypi
+
 - Don't lose additional methods in class decorator? Maybe create a class that is a child of the namedtuple
+
 - Add some documentation info about the philosophy behind define the signature
+
 - take a look at some alternative memoize implementations and use the best (see http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/ and https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize)
+
 - default values, like https://github.com/gesellkammer/namedtuple2
+
+    - when passing a callable the callable is invoked at construction to
+      determine the default value
+
+    - need to figure out how this will work when:
+
+        - used like a decorator factory with dynamic field names
+        - used like the std function
+
+    - this is basic idea when used as a decorator:
+
+.. code:: python
+
+    import sys
+    import socket
+    import datetime
+    import threading
+
+    @namedtuple
+    def LogMessage(
+        message_type='info',
+        server=socket.gethostname(),
+        application=sys.executable,
+        process=lambda: threading.current_thread().name,
+        timestamp=lambda: datetime.datetime.now(),
+        message='',
+    ):\
+    'message for the logging system'

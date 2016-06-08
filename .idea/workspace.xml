@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="29727744-c873-4952-b285-cc7137ac4d14" name="Default" comment="standard">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/namedtuple3/__init__.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/namedtuple2/__init__.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+    <list default="true" id="29727744-c873-4952-b285-cc7137ac4d14" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.rst" afterPath="$PROJECT_DIR$/README.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/csv_named_tuple_reader.py" afterPath="$PROJECT_DIR$/examples/csv_named_tuple_reader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pytest.ini" afterPath="$PROJECT_DIR$/pytest.ini" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/namedtuple2.iml" afterPath="$PROJECT_DIR$/.idea/namedtuple3.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/namedtuple2/_namedtuple2_impl.py" afterPath="$PROJECT_DIR$/namedtuple3/_namedtuple3_impl.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/namedtuple2/test/__init__.py" afterPath="$PROJECT_DIR$/namedtuple3/test/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/namedtuple2/test/test_namedtuple2.py" afterPath="$PROJECT_DIR$/namedtuple3/test/test_namedtuple3.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/namedtuple3/test/test_namedtuple3.py" afterPath="$PROJECT_DIR$/namedtuple3/test/test_namedtuple3.py" />
     </list>
     <ignored path="namedtuple_decorator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test_namedtuple3.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_namedtuple3.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/namedtuple3/test/test_namedtuple3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4360">
-              <caret line="615" column="30" selection-start-line="615" selection-start-column="30" selection-end-line="615" selection-end-column="30" />
+            <state relative-caret-position="438">
+              <caret line="625" column="0" selection-start-line="625" selection-start-column="0" selection-end-line="625" selection-end-column="0" />
               <folding>
                 <element signature="e#6#24#0" expanded="false" />
                 <element signature="e#554#1000#0" expanded="false" />
@@ -171,9 +163,14 @@
       <file leaf-file-name="_namedtuple3_impl.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/namedtuple3/_namedtuple3_impl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3220">
-              <caret line="161" column="27" selection-start-line="161" selection-start-column="27" selection-end-line="161" selection-end-column="27" />
-              <folding />
+            <state relative-caret-position="458">
+              <caret line="108" column="40" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
+              <folding>
+                <marker date="1465369622376" expanded="true" signature="2414:2431" ph="..." />
+                <marker date="1465369622376" expanded="true" signature="2680:2739" ph="..." />
+                <marker date="1465369622376" expanded="true" signature="2718:2739" ph="..." />
+                <marker date="1465369622376" expanded="true" signature="4707:4743" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -188,22 +185,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.rst" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
-              <caret line="181" column="21" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
+            <state relative-caret-position="564">
+              <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
               <folding>
-                <marker date="1465369335874" expanded="true" signature="1216:1272" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="1552:1557" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="1710:1715" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="2016:2134" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="2113:2134" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="2390:2446" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="2594:2599" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="3086:3142" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="3185:3303" ph="..." />
-                <marker date="1465369335874" expanded="true" signature="3282:3303" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="1216:1272" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="1552:1557" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="1710:1715" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="2016:2134" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="2113:2134" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="2390:2446" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="2594:2599" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="3086:3142" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="3185:3303" ph="..." />
+                <marker date="1465370672604" expanded="true" signature="3282:3303" ph="..." />
               </folding>
             </state>
           </provider>
@@ -255,7 +252,9 @@
         <option value="$PROJECT_DIR$/examples/csv_named_tuple_reader.py" />
         <option value="$PROJECT_DIR$/namedtuple2/_namedtuple2_impl.py" />
         <option value="$PROJECT_DIR$/namedtuple2/test/test_namedtuple2.py" />
+        <option value="$PROJECT_DIR$/namedtuple3/_namedtuple3_impl.py" />
         <option value="$PROJECT_DIR$/README.rst" />
+        <option value="$PROJECT_DIR$/namedtuple3/test/test_namedtuple3.py" />
       </list>
     </option>
   </component>
@@ -822,7 +821,21 @@
       <option name="project" value="LOCAL" />
       <updated>1465367370839</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="renamed to namedtuple3 since there is already a namedtuple2">
+      <created>1465369357692</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1465369357692</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added keyword to function calls">
+      <created>1465369654279</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1465369654279</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -920,7 +933,9 @@
     <MESSAGE value="readme is rst" />
     <MESSAGE value="rename to namedtuple2" />
     <MESSAGE value="readme improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="readme improvements" />
+    <MESSAGE value="renamed to namedtuple3 since there is already a namedtuple2" />
+    <MESSAGE value="added keyword to function calls" />
+    <option name="LAST_COMMIT_MESSAGE" value="added keyword to function calls" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -949,7 +964,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
+          <folding>
+            <marker date="1465369622376" expanded="true" signature="2414:2431" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2680:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2718:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="4707:4743" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1104,16 +1124,16 @@
         <state relative-caret-position="1520">
           <caret line="76" column="77" selection-start-line="76" selection-start-column="77" selection-end-line="76" selection-end-column="77" />
           <folding>
-            <marker date="1465369335874" expanded="true" signature="1216:1272" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1552:1557" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1710:1715" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2016:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2113:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2390:2446" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2594:2599" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3086:3142" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3185:3303" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3282:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1216:1272" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1552:1557" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1710:1715" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2016:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2113:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2390:2446" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2594:2599" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3086:3142" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3185:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3282:3303" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1159,7 +1179,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-          <folding />
+          <folding>
+            <marker date="1465369622376" expanded="true" signature="2414:2431" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2680:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2718:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="4707:4743" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1298,16 +1323,16 @@
         <state relative-caret-position="1480">
           <caret line="74" column="71" selection-start-line="74" selection-start-column="71" selection-end-line="74" selection-end-column="71" />
           <folding>
-            <marker date="1465369335874" expanded="true" signature="1216:1272" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1552:1557" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1710:1715" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2016:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2113:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2390:2446" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2594:2599" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3086:3142" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3185:3303" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3282:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1216:1272" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1552:1557" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1710:1715" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2016:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2113:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2390:2446" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2594:2599" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3086:3142" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3185:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3282:3303" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1353,7 +1378,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1465369622376" expanded="true" signature="2414:2431" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2680:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2718:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="4707:4743" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1485,16 +1515,16 @@
         <state relative-caret-position="140">
           <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
           <folding>
-            <marker date="1465369335874" expanded="true" signature="1216:1272" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1552:1557" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1710:1715" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2016:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2113:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2390:2446" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2594:2599" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3086:3142" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3185:3303" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3282:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1216:1272" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1552:1557" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1710:1715" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2016:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2113:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2390:2446" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2594:2599" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3086:3142" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3185:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3282:3303" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1540,7 +1570,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1465369622376" expanded="true" signature="2414:2431" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2680:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2718:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="4707:4743" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1883,18 +1918,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examples/csv_named_tuple_reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/namedtuple3/_namedtuple3_impl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3220">
-          <caret line="161" column="27" selection-start-line="161" selection-start-column="27" selection-end-line="161" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="458">
+          <caret line="108" column="40" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
+          <folding>
+            <marker date="1465369622376" expanded="true" signature="2414:2431" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2680:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="2718:2739" ph="..." />
+            <marker date="1465369622376" expanded="true" signature="4707:4743" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+          <folding>
+            <marker date="1465370672604" expanded="true" signature="1216:1272" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1552:1557" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="1710:1715" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2016:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2113:2134" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2390:2446" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="2594:2599" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3086:3142" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3185:3303" ph="..." />
+            <marker date="1465370672604" expanded="true" signature="3282:3303" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/namedtuple3/test/test_namedtuple3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4360">
-          <caret line="615" column="30" selection-start-line="615" selection-start-column="30" selection-end-line="615" selection-end-column="30" />
+        <state relative-caret-position="438">
+          <caret line="625" column="0" selection-start-line="625" selection-start-column="0" selection-end-line="625" selection-end-column="0" />
           <folding>
             <element signature="e#6#24#0" expanded="false" />
             <element signature="e#554#1000#0" expanded="false" />
@@ -2010,33 +2077,6 @@
             <element signature="e#16958#17061#0" expanded="false" />
             <element signature="e#17057#17061#0" expanded="false" />
             <element signature="e#17228#17386#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/csv_named_tuple_reader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="181" column="21" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
-          <folding>
-            <marker date="1465369335874" expanded="true" signature="1216:1272" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1552:1557" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="1710:1715" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2016:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2113:2134" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2390:2446" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="2594:2599" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3086:3142" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3185:3303" ph="..." />
-            <marker date="1465369335874" expanded="true" signature="3282:3303" ph="..." />
           </folding>
         </state>
       </provider>
