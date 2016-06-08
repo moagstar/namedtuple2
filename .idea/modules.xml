@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/namedtuple_decorator.iml" filepath="$PROJECT_DIR$/.idea/namedtuple_decorator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/namedtuple2.iml" filepath="$PROJECT_DIR$/.idea/namedtuple2.iml" />
     </modules>
   </component>
 </project>

@@ -40,20 +40,20 @@ def _verify(nt, doc_expected=None, field_names=('x', 'y', 'z')):
     assert nt.__doc__ == doc_expected
 
 
-def verify_standard(nt):
+def verify_point3(nt):
     _verify(nt)
 
 
-def verify_standard_dynamic(nt):
+def verify_fields(nt):
     _verify(nt, field_names=('_0', '_1', '_2'))
 
 
-def verify_decorator(nt):
+def verify_point3_with_docstring(nt):
     _verify(nt, doc_expected='an element of some set called a space',
            field_names=('x', 'y', 'z'))
 
 
-def verify_decorator_dynamic(nt):
+def verify_fields_with_docstring(nt):
     _verify(nt, doc_expected='an element of some set called a space',
            field_names=('_0', '_1', '_2'))
 
@@ -231,7 +231,7 @@ def test_standard_function():
 
     Point3 = namedtuple('Point3', 'x, y, z')
 
-    verify_standard(Point3)
+    verify_point3(Point3)
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -239,7 +239,7 @@ def test_standard_function_verbose(verbose):
 
     Point3 = namedtuple('Point3', 'x, y, z', verbose=verbose)
 
-    verify_standard(Point3)
+    verify_point3(Point3)
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -247,7 +247,7 @@ def test_standard_function_rename(rename):
 
     Point3 = namedtuple('Point3', 'x, y, z', rename=rename)
 
-    verify_standard(Point3)
+    verify_point3(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -256,7 +256,7 @@ def test_standard_function_verbose_and_rename(verbose, rename):
 
     Point3 = namedtuple('Point3', 'x, y, z', verbose=verbose, rename=rename)
 
-    verify_standard(Point3)
+    verify_point3(Point3)
 
 
 # function decorator: basic ####################################################
@@ -267,7 +267,7 @@ def test_function_decorator():
     def Point3(x, y, z):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -277,7 +277,7 @@ def test_function_decorator_verbose(verbose):
     def Point3(x, y, z):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -287,7 +287,7 @@ def test_function_decorator_rename(rename):
     def Point3(x, y, z):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -298,7 +298,7 @@ def test_function_decorator_verbose_and_rename(verbose, rename):
     def Point3(x, y, z):
         """an element of some set called a space"""
         
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 # class decorator: basic #######################################################
@@ -311,7 +311,7 @@ def test_class_decorator():
         def __init__(self, x, y, z):
             pass
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -323,7 +323,7 @@ def test_class_decorator_verbose(verbose):
         def __init__(self, x, y, z):
             pass
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -335,7 +335,7 @@ def test_class_decorator_rename(rename):
         def __init__(self, x, y, z):
             pass
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -348,7 +348,7 @@ def test_class_decorator_verbose_and_rename(verbose, rename):
         def __init__(self, x, y, z):
             pass
         
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 # function decorator: dynamic field names ######################################
@@ -359,7 +359,7 @@ def test_function_decorator_dynamic_field_names():
     def Point3(*args):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -369,7 +369,7 @@ def test_function_decorator_dynamic_field_names_verbose(verbose):
     def Point3(*args):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -379,7 +379,7 @@ def test_function_decorator_dynamic_field_names_rename(rename):
     def Point3(*args):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -391,7 +391,7 @@ def test_function_decorator_dynamic_field_names_verbose_and_rename(
     def Point3(*args):
         """an element of some set called a space"""
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 # function decorator: dynamic field names ######################################
@@ -404,7 +404,7 @@ def test_class_decorator_dynamic_field_names():
         def __init__(self, *args):
             pass
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -416,7 +416,7 @@ def test_class_decorator_dynamic_field_names_verbose(verbose):
         def __init__(self, *args):
             pass
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -428,7 +428,7 @@ def test_class_decorator_dynamic_field_names_rename(rename):
         def __init__(self, *args):
             pass
 
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -442,7 +442,7 @@ def test_class_decorator_dynamic_field_names_verbose_and_rename(
         def __init__(self, *args):
             pass
         
-    verify_decorator(Point3)
+    verify_point3_with_docstring(Point3)
 
 
 # standard function : dynamic invalid field names ##############################
@@ -454,7 +454,7 @@ def test_standard_function_dynamic_invalid_field_names():
 
         Point3 = namedtuple('Point3', range(3))
         
-        verify_standard_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+        verify_fields(Point3)  # pragma: no cover - may not get here due to expected error raised
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -466,7 +466,7 @@ def test_standard_functionr_dynamic_invalid_field_names_verbose(
 
         Point3 = namedtuple('Point3', range(3), verbose=verbose)
         
-        verify_standard_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+        verify_fields(Point3)  # pragma: no cover - may not get here due to expected error raised
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -477,7 +477,7 @@ def test_standard_function_dynamic_invalid_field_names_rename(rename):
 
         Point3 = namedtuple('Point3', range(3), rename=rename)
         
-        verify_standard_dynamic(Point3)
+        verify_fields(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -490,7 +490,7 @@ def test_standard_function_dynamic_invalid_field_names_verbose_and_rename(
 
         Point3 = namedtuple('Point3', range(3), verbose=verbose, rename=rename)
 
-        verify_standard_dynamic(Point3)
+        verify_fields(Point3)
 
 
 # function decorator: dynamic invalid field names ##############################
@@ -504,7 +504,7 @@ def test_function_decorator_dynamic_invalid_field_names():
         def Point3(*args):
             """an element of some set called a space"""
 
-        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+        verify_fields_with_docstring(Point3)  # pragma: no cover - may not get here due to expected error raised
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -517,7 +517,7 @@ def test_function_decorator_dynamic_invalid_field_names_verbose(verbose):
         def Point3(*args):
             """an element of some set called a space"""
 
-        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+        verify_fields_with_docstring(Point3)  # pragma: no cover - may not get here due to expected error raised
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -530,7 +530,7 @@ def test_function_decorator_dynamic_invalid_field_names_rename(rename):
         def Point3(*args):
             """an element of some set called a space"""
 
-        verify_decorator_dynamic(Point3)
+        verify_fields_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -545,7 +545,7 @@ def test_function_decorator_dynamic_invalid_field_names_verbose_and_rename(
         def Point3(*args):
             """an element of some set called a space"""
 
-        verify_decorator_dynamic(Point3)
+        verify_fields_with_docstring(Point3)
 
 
 # class decorator: dynamic invalid field names #################################
@@ -561,7 +561,7 @@ def test_class_decorator_dynamic_invalid_field_names():
             def __init__(self, *args):
                 pass
 
-        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+        verify_fields_with_docstring(Point3)  # pragma: no cover - may not get here due to expected error raised
 
 
 @pytest.mark.parametrize("verbose", [True, False])
@@ -576,7 +576,7 @@ def test_class_decorator_dynamic_invalid_field_names_verbose(verbose):
             def __init__(self, *args):
                 pass
 
-        verify_decorator_dynamic(Point3)  # pragma: no cover - may not get here due to expected error raised
+        verify_fields_with_docstring(Point3)  # pragma: no cover - may not get here due to expected error raised
 
 
 @pytest.mark.parametrize("rename", [True, False])
@@ -591,7 +591,7 @@ def test_class_decorator_dynamic_invalid_field_names_rename(rename):
             def __init__(self, *args):
                 pass
 
-        verify_decorator_dynamic(Point3)
+        verify_fields_with_docstring(Point3)
 
 
 @pytest.mark.parametrize("verbose,rename",
@@ -608,4 +608,13 @@ def test_class_decorator_dynamic_invalid_field_names_verbose_and_rename(
             def __init__(self, *args):
                 pass
 
-        verify_decorator_dynamic(Point3)
+        verify_fields_with_docstring(Point3)
+
+
+# docstring ####################################################################
+
+def test_standard_docstring():
+
+    Point3 = namedtuple('Point3', 'x y z',
+                        docstring="""an element of some set called a space""")
+    verify_point3_with_docstring(Point3)

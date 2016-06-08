@@ -20,19 +20,38 @@ def memoize(obj):
 _original_namedtuple = collections.namedtuple
 
 
+def _original_namedtuple_with_docstring(name, field_names, verbose=False,
+                                        rename=False, docstring=None):
+    """
+    Replacement namedtuple which can be used to set the docstring.
+    """
+
+    nt = _original_namedtuple(name, field_names, verbose, rename)
+    doc_dict = {'__doc__': docstring or nt.__doc__}
+
+    return type(name, (nt,), doc_dict)
+
+
 @memoize
-def _memoized_namedtuple(name, field_names, verbose, rename):
-    return _original_namedtuple(name, field_names, verbose, rename)
+def _memoized_namedtuple(name, field_names, verbose, rename, docstring):
+    """
+    Named tuple function which remembers the resulting type based on the
+    parameters passed.
+    """
+    return _original_namedtuple_with_docstring(name, field_names, verbose,
+                                               rename, docstring)
 
 
-def _namedtuple(name, field_names, verbose=False, rename=False):
+def _namedtuple(name, field_names, verbose=False, rename=False, docstring=None):
     # when verbose was requested we should still display the generated code
     # at the moment the best way I can do this is by regenerating the type
     # even though it has been cached...
     if verbose:
-        return _original_namedtuple(name, field_names, verbose, rename)
+        return _original_namedtuple_with_docstring(name, field_names, verbose,
+                                                   rename, docstring)
     else:
-        return _memoized_namedtuple(name, field_names, verbose, rename)
+        return _memoized_namedtuple(name, field_names, verbose, rename,
+                                    docstring)
 
 
 def _isiterable(o):
@@ -81,44 +100,38 @@ def _is_used_as_plain_class_decorator(*args):
     return len(args) == 1 and inspect.isclass(args[0])
 
 
-def _namedtuple_from_func(name, field_names, verbose, rename, __doc__):
-    nt = _namedtuple(name, field_names, verbose, rename)
-    doc_dict = {'__doc__': __doc__ or nt.__doc__}
-    return type(name, (nt,), doc_dict)
-
-
-def _class_decorator(cls, field_names, verbose, rename):
+def _class_decorator(cls, field_names, verbose, rename, docstring):
     """
-    Decorate a class to make it into a named tuple.
+    Create a namedtuple from a decorated class.
     """
-    # strip off self
+    # strip off self from the args
     field_names = field_names or inspect.getargspec(cls.__init__).args[1:]
-    return _namedtuple_from_func(cls.__name__, field_names, verbose, rename,
-                                 cls.__doc__)
+    docstring = docstring or cls.__doc__
+    return _namedtuple(cls.__name__, field_names, verbose, rename, docstring)
 
 
-def _function_decorator(fn, field_names, verbose, rename):
+def _function_decorator(fn, field_names, verbose, rename, docstring):
     """
     Decorate a function to make it into a named tuple.
     """
     field_names = field_names or inspect.getargspec(fn).args
-    return _namedtuple_from_func(fn.__name__, field_names, verbose, rename,
-                                 fn.__doc__)
+    docstring = docstring or fn.__doc__
+    return _namedtuple(fn.__name__, field_names, verbose, rename, docstring)
 
 
-def _decorator(o, field_names, verbose, rename):
+def _decorator(o, field_names, verbose, rename, docstring):
     """
     Decorate an object to make it into a named tuple, selecting the
     appropriate decorator based on the type of the object o.
     """
     if inspect.isclass(o):
-        return _class_decorator(o, field_names, verbose, rename)
+        return _class_decorator(o, field_names, verbose, rename, docstring)
     else:
-        return _function_decorator(o, field_names, verbose, rename)
+        return _function_decorator(o, field_names, verbose, rename, docstring)
 
 
 def _check_kwargs(**kwargs):
-    supported_kwargs = {'rename', 'verbose'}
+    supported_kwargs = {'rename', 'verbose', 'docstring'}
     if kwargs:
         other_kwargs = supported_kwargs | set(kwargs.keys())
         if other_kwargs != supported_kwargs:
@@ -130,16 +143,31 @@ def _check_kwargs(**kwargs):
 
 def namedtuple(*args, **kwargs):
     """
+    Returns a new subclass of tuple with named fields.
+
+    This is a drop in replacement for the standard function
+    :code:`collections.namedtuple` which can be used as a decorator so that the
+    type name does not have to be written twice:
+
+        >>> from namedtuple2 import namedtuple
+        >>> @namedtuple
+        ... def Point3(x, y, z) : 'an element of a set named a space'
+
+    vs:
+
+        >>> from collections import namedtuple
+        >>> Point3 = namedtuple('Point3', 'x y z')
+
     """
     _check_kwargs(**kwargs)
 
     # used as a plain class decorator
     if _is_used_as_plain_class_decorator(*args):
-        return _class_decorator(args[0], None, False, False)
+        return _class_decorator(args[0], None, False, False, None)
 
     # used as a plain function decorator
     elif _is_used_as_plain_function_decorator(*args):
-        return _function_decorator(args[0], None, False, False)
+        return _function_decorator(args[0], None, False, False, None)
 
     # used like the standard python namedtuple
     elif _is_used_like_std_namedtuple(*args, **kwargs):
@@ -149,6 +177,8 @@ def namedtuple(*args, **kwargs):
     else:
         verbose = kwargs.get('verbose', False)
         rename = kwargs.get('rename', False)
+        docstring = kwargs.get('docstring', None)
         field_names = args[0] if args else None
         return functools.partial(_decorator, field_names=field_names,
-                                 verbose=verbose, rename=rename)
+                                 verbose=verbose, rename=rename,
+                                 docstring=docstring)

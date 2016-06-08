@@ -2,9 +2,9 @@
 namedtuple2
 ***********
 
-A drop in replacement for the standard function `collections.namedtuple` which
-can be used as a decorator so that the type name does not have to be written
-twice:
+A drop in replacement for the standard function :code:`collections.namedtuple`
+which can be used as a decorator so that the type name does not have to be
+written twice:
 
 .. code:: python
 
@@ -43,13 +43,6 @@ Usage
 
 There are several usage patterns:
 
-----------------------------------------
-Like the standard collections.namedtuple
-----------------------------------------
-
-    >>> from namedtuple2 import namedtuple
-    >>> Point3 = namedtuple('Point3', 'x y z')
-
 -----------------------
 As a function decorator
 -----------------------
@@ -58,6 +51,7 @@ When used as a function decorator you can think of it as defining the signature
 of a top-level function which is the constructor for the type. The decorator
 then replaces this with the actual generated namedtuple.
 
+    >>> from namedtuple2 import namedtuple
     >>> @namedtuple
     ... def Point3(x, y, z):
     ...     """an element of some set called a space"""
@@ -98,7 +92,6 @@ As a class decorator factory
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
 
-    >>> from namedtuple2 import namedtuple
     >>> @namedtuple(chr(x) for x in range(120, 123))
     ... class Fields:
     ...     """an element of some set called a space"""
@@ -108,11 +101,36 @@ The decorator factory can also be used to pass the verbose or rename parameters:
     >>> @namedtuple(range(3), rename=True)
     ... class Fields: pass
 
+----------------------------------------
+Like the standard collections.namedtuple
+----------------------------------------
+
+It is also possible to use namedtuple2 like the standard
+:code:`collections.namedtuple`
+
+    >>> Point3 = namedtuple('Point3', 'x y z')
+
 =========
 Docstring
 =========
 
-TODO
+It is also possible to customize the docstring of the generated type, either
+by setting the docstring of the class or function being decorated:
+
+    >>> @namedtuple
+    ... def Point3(x, y, z):
+    ...     """an element of some set called a space"""
+
+    >>> @namedtuple
+    ... class Point3:
+    ...     """an element of some set called a space"""
+    ...     def __init__(self, x, y, z):
+    ...         pass
+
+Or by passing the docstring parameter of the namedtuple function:
+
+    >>> Point3 = namedtuple('Point3', 'x y z',
+    ...                     docstring='an element of some set called a space')
 
 ===========
 Memoization
@@ -135,7 +153,7 @@ created type.
 How it works
 ============
 
-The functio-n namedtuple selects an implementation based on the parameters that
+The function namedtuple selects an implementation based on the parameters that
 are passed:
 
 - when given a class we assume that a plain class decorator is intended
@@ -148,7 +166,8 @@ are passed:
       field_names
 
 - when fields_names is present in keyword arguments, or the second positional
-  argument is iterable we assume the classic form of namedtuple is intended
+  argument is iterable the assumption is that the standard form of namedtuple
+  is intended, where the type name and an iterable is given
 
 - otherwise we assume a decorator factory is desired with the verbose and
   replace flags passed as arguments.
