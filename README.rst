@@ -8,7 +8,7 @@ twice:
 
 .. code:: python
 
-    from namedtuple_decorator import namedtuple
+    from namedtuple2 import namedtuple
 
     @namedtuple
     def Point3(x, y, z): pass
@@ -49,14 +49,14 @@ There are several usage patterns:
 Like the standard collections.namedtuple
 ----------------------------------------
 
-    >>> from namedtuple_decorator import namedtuple
+    >>> from namedtuple2 import namedtuple
     >>> Point3 = namedtuple('Point3', 'x y z')
 
 -----------------------
 As a function decorator
 -----------------------
 
-    >>> from namedtuple_decorator import namedtuple
+    >>> from namedtuple2 import namedtuple
     >>> @namedtuple
     ... def Point3(x, y, z):
     ...     """an element of some set called a space"""
@@ -68,7 +68,7 @@ As a function decorator factory
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
 
-    >>> from namedtuple_decorator import namedtuple
+    >>> from namedtuple2 import namedtuple
     >>> @namedtuple(chr(x) for x in range(120, 123))
     ... def Fields(*args):
     ...     """an element of some set called a space"""
@@ -77,7 +77,7 @@ decorator factory:
 As a class decorator
 --------------------
 
-    >>> from namedtuple_decorator import namedtuple
+    >>> from namedtuple2 import namedtuple
     >>> @namedtuple
     ... class Point3:
     ...     """an element of some set called a space"""
@@ -91,7 +91,7 @@ As a class decorator factory
 If the field names are dynamically generated, they can be passed to the
 decorator factory:
 
-    >>> from namedtuple_decorator import namedtuple
+    >>> from namedtuple2 import namedtuple
     >>> @namedtuple(chr(x) for x in range(120, 123))
     ... class Fields:
     ...     """an element of some set called a space"""

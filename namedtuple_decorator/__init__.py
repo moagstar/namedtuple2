@@ -1,1 +1,0 @@
-from namedtuple_decorator._namedtuple_decorator_impl import namedtuple
