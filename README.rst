@@ -1,5 +1,5 @@
 ***********
-namedtuple2
+namedtuple3
 ***********
 
 A drop in replacement for the standard function :code:`collections.namedtuple`
@@ -8,7 +8,7 @@ written twice:
 
 .. code:: python
 
-    from namedtuple2 import namedtuple
+    from namedtuple3 import namedtuple
 
     @namedtuple
     def Point3(x, y, z) : 'an element of some set called a space'
@@ -51,7 +51,7 @@ When used as a function decorator you can think of it as defining the signature
 of a top-level function which is the constructor for the type. The decorator
 then replaces this with the actual generated namedtuple.
 
-    >>> from namedtuple2 import namedtuple
+    >>> from namedtuple3 import namedtuple
     >>> @namedtuple
     ... def Point3(x, y, z):
     ...     """an element of some set called a space"""
@@ -105,7 +105,7 @@ The decorator factory can also be used to pass the verbose or rename parameters:
 Like the standard collections.namedtuple
 ----------------------------------------
 
-It is also possible to use namedtuple2 like the standard
+It is also possible to use namedtuple3 like the standard
 :code:`collections.namedtuple`
 
     >>> Point3 = namedtuple('Point3', 'x y z')
@@ -186,3 +186,4 @@ TODO
 - Don't lose additional methods in class decorator? Maybe create a class that is a child of the namedtuple
 - Add some documentation info about the philosophy behind define the signature
 - take a look at some alternative memoize implementations and use the best (see http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/ and https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize)
+- default values, like https://github.com/gesellkammer/namedtuple2

@@ -3,7 +3,7 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-from namedtuple2 import namedtuple
+from namedtuple3 import namedtuple
 
 
 class NamedTupleReader:

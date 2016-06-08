@@ -1,0 +1,1 @@
+from namedtuple3._namedtuple3_impl import namedtuple

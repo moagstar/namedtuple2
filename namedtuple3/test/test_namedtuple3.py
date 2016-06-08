@@ -10,8 +10,8 @@ import mock
 # pytest
 import pytest
 # namedtuple_decorator
-from namedtuple2 import namedtuple
-from namedtuple2._namedtuple2_impl import (
+from namedtuple3 import namedtuple
+from namedtuple3._namedtuple3_impl import (
     _is_used_as_plain_class_decorator,
     _is_used_as_plain_function_decorator,
     _isiterable,
@@ -211,7 +211,7 @@ def test_memoize():
         call_count[0] += 1
         return collections.namedtuple(*args, **kwargs)
 
-    @mock.patch('namedtuple2._namedtuple2_impl._original_namedtuple',
+    @mock.patch('namedtuple3._namedtuple3_impl._original_namedtuple',
                 nametuple_replace)
     def do_test():
         """verify that multiple classes are not created"""

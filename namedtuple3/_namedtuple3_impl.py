@@ -149,7 +149,7 @@ def namedtuple(*args, **kwargs):
     :code:`collections.namedtuple` which can be used as a decorator so that the
     type name does not have to be written twice:
 
-        >>> from namedtuple2 import namedtuple
+        >>> from namedtuple3 import namedtuple
         >>> @namedtuple
         ... def Point3(x, y, z) : 'an element of a set named a space'
 
