@@ -182,6 +182,8 @@ TODO
 
 - Sphinx, readthedocs
 
+- performance tests
+
 - test with tox
 
 - travis, appveyor, circle
@@ -189,10 +191,6 @@ TODO
 - setup.py pypi
 
 - Don't lose additional methods in class decorator? Maybe create a class that is a child of the namedtuple
-
-- Add some documentation info about the philosophy behind define the signature
-
-- take a look at some alternative memoize implementations and use the best (see http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/ and https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize)
 
 - default values, like https://github.com/gesellkammer/namedtuple2
 
@@ -215,11 +213,10 @@ TODO
 
     @namedtuple
     def LogMessage(
+        message,
         message_type='info',
         server=socket.gethostname(),
         application=sys.executable,
         process=lambda: threading.current_thread().name,
         timestamp=lambda: datetime.datetime.now(),
-        message='',
-    ):\
-    'message for the logging system'
+    ) : 'message for the logging system'

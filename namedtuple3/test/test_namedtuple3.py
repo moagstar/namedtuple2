@@ -634,11 +634,10 @@ def test_default():
 
     @namedtuple
     def LogMessage(
+        message,
         message_type='info',
         server=socket.gethostname(),
         application=sys.executable,
         process=lambda: threading.current_thread().name,
         timestamp=lambda: datetime.datetime.now(),
-        message='',
-    ):
-        'message for the logging system'
+    ) : 'message for the logging system'
