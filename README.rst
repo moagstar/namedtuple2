@@ -4,14 +4,18 @@ namedtuple2
 
 A drop in replacement for the standard function `collections.namedtuple` which
 can be used as a decorator so that the type name does not have to be written
-twice::
+twice:
+
+.. code:: python
 
     from namedtuple_decorator import namedtuple
 
     @namedtuple
     def Point3(x, y, z): pass
 
-vs::
+vs:
+
+.. code:: python
 
     from collections import namedtuple
 
